@@ -4,8 +4,15 @@ import { PreviousSongAction } from "./ws-events/previous-song";
 import { WebsocketMessage } from "./ws-events/types";
 import { registerSongChangeListener } from "./ws-listeners/song-change"
 
+let listenersRegistered = false;
+
 export const registerListeners = (websocketClient: WebsocketClient) => {
+    if (listenersRegistered) {
+        return;
+    }
+
     registerSongChangeListener(websocketClient);
+    listenersRegistered = true;
 }
 
 const eventHandlers = [
