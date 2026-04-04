@@ -56,12 +56,6 @@ export class WebsocketClient {
         const config = this.getConfig();
         this.websocketUrl = this.getUrl(config);
         this.ws = new WebSocket(this.websocketUrl);
-
-        if (!this.websocketUrl) {
-            console.error("Websocket URL is not defined");
-            return null;
-        }
-        this.ws = new WebSocket(this.websocketUrl);
         this.initialize();
     }
 
