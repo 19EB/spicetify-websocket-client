@@ -9,7 +9,7 @@ export const defaultWebsocketPort = "9090";
 
 export async function addSettings() {
     settings.addInput("websocketAddress", "Websocket address", defaultWebsocketAddress);
-    settings.addInput("websocketPort", "Websocket port", defaultWebsocketPort);
+    settings.addInput("websocketPort", "Websocket port", defaultWebsocketPort, undefined, 'number');
     settings.addInput("websocketEndpoint", "Websocket endpoint", "/");
     settings.addToggle("startWebsocketOnLaunch", "Start websocket on launch", false);
     await settings.pushSettings();
