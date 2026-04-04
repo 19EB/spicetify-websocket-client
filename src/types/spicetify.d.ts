@@ -700,12 +700,12 @@ declare namespace Spicetify {
 		type KeysDefine =
 			| string
 			| {
-					key: string;
-					ctrl?: boolean;
-					shift?: boolean;
-					alt?: boolean;
-					meta?: boolean;
-			  };
+				key: string;
+				ctrl?: boolean;
+				shift?: boolean;
+				alt?: boolean;
+				meta?: boolean;
+			};
 		const KEYS: Record<ValidKey, string>;
 		function registerShortcut(keys: KeysDefine, callback: (event: KeyboardEvent) => void): void;
 		function registerIsolatedShortcut(keys: KeysDefine, callback: (event: KeyboardEvent) => void): void;
@@ -1256,6 +1256,18 @@ declare namespace Spicetify {
 		static isPlaylistV1OrV2(uri: URI | string): boolean;
 	}
 
+	namespace ContextMenuV2 {
+		class Item {
+			constructor({ children, disabled = false, leadingIcon, trailingIcon, divider, onClick, shouldAdd = () => true });
+			trailingIcon: Icon | string;
+			leadingIcon: Icon | string;
+			register(): void;
+			deregister(): void;
+			children: React.ReactNode;
+		}
+	}
+
+
 	/**
 	 * Create custom menu item and prepend to right click context menu
 	 */
@@ -1369,18 +1381,18 @@ declare namespace Spicetify {
 			 * Relative to trigger element.
 			 */
 			placement?:
-				| "top"
-				| "top-start"
-				| "top-end"
-				| "right"
-				| "right-start"
-				| "right-end"
-				| "bottom"
-				| "bottom-start"
-				| "bottom-end"
-				| "left"
-				| "left-start"
-				| "left-end";
+			| "top"
+			| "top-start"
+			| "top-end"
+			| "right"
+			| "right-start"
+			| "right-end"
+			| "bottom"
+			| "bottom-start"
+			| "bottom-end"
+			| "left"
+			| "left-start"
+			| "left-end";
 			/**
 			 * The x and y offset distances at which the context menu should open.
 			 * Relative to trigger element and `position`.
@@ -1394,11 +1406,11 @@ declare namespace Spicetify {
 			 * The menu UI to render inside of the context menu.
 			 */
 			menu:
-				| typeof Spicetify.ReactComponent.Menu
-				| typeof Spicetify.ReactComponent.AlbumMenu
-				| typeof Spicetify.ReactComponent.PodcastShowMenu
-				| typeof Spicetify.ReactComponent.ArtistMenu
-				| typeof Spicetify.ReactComponent.PlaylistMenu;
+			| typeof Spicetify.ReactComponent.Menu
+			| typeof Spicetify.ReactComponent.AlbumMenu
+			| typeof Spicetify.ReactComponent.PodcastShowMenu
+			| typeof Spicetify.ReactComponent.ArtistMenu
+			| typeof Spicetify.ReactComponent.PlaylistMenu;
 			/**
 			 * A child of the context menu. Should be `<button>`, `<a>`,
 			 * a custom react component that forwards a ref to a `<button>` or `<a>`,
@@ -1479,18 +1491,18 @@ declare namespace Spicetify {
 			 * @default 'top'
 			 */
 			placement?:
-				| "top"
-				| "top-start"
-				| "top-end"
-				| "right"
-				| "right-start"
-				| "right-end"
-				| "bottom"
-				| "bottom-start"
-				| "bottom-end"
-				| "left"
-				| "left-start"
-				| "left-end";
+			| "top"
+			| "top-start"
+			| "top-end"
+			| "right"
+			| "right-start"
+			| "right-end"
+			| "bottom"
+			| "bottom-start"
+			| "bottom-end"
+			| "left"
+			| "left-start"
+			| "left-end";
 			/**
 			 * Class name to apply to the tooltip
 			 */
