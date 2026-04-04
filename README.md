@@ -1,1 +1,1 @@
-# spicetify-websocket
+# spicetify-websocket-client

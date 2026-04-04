@@ -1,5 +1,5 @@
 {
-  "name": "spicetify-websocket",
+  "name": "spicetify-websocket-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
