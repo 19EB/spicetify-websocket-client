@@ -1,6 +1,7 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction } from "./types";
 
 function playPreviousSong() {
+    Spicetify.Player.skipBack(99999999);
     Spicetify.Player.back();
 }
 
