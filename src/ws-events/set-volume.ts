@@ -1,9 +1,6 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction } from "./types";
 
 function setVolume(volume: number) {
-
-    console.log(`Setting volume to ${volume}`);
-
     const asFloat = volume / 100;
     const clamped = Math.max(0, Math.min(asFloat, 1));
     Spicetify.Player.setVolume(clamped);
