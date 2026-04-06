@@ -1,8 +1,9 @@
 import { WebsocketClient } from "./ws-api";
 import { NextSongAction } from "./ws-events/next-song";
 import { PreviousSongAction } from "./ws-events/previous-song";
+import { SetVolumeAction } from "./ws-events/set-volume";
 import { WebsocketMessage } from "./ws-events/types";
-import { registerSongChangeListener } from "./ws-listeners/song-change"
+import { registerSongChangeListener } from "./ws-listeners/song-change";
 
 let listenersRegistered = false;
 
@@ -18,6 +19,7 @@ export const registerListeners = (websocketClient: WebsocketClient) => {
 const eventHandlers = [
     NextSongAction,
     PreviousSongAction,
+    SetVolumeAction,
 ]
 
 export const registerEvents = (websocketClient: WebsocketClient) => {
