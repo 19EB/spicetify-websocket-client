@@ -48,7 +48,7 @@ export class WebsocketClient {
         return config;
     }
 
-    public reconnect() {
+    public connect() {
         if (this.ws) {
             this.ws.close();
         }
@@ -59,9 +59,16 @@ export class WebsocketClient {
         this.initialize();
     }
 
+    public disconnect() {
+        if (this.ws) {
+            this.ws.close();
+        }
+        this.ws = null;
+        this.setConnectionStatus(WebsocketConnectionStatus.NOT_CONNECTED);
+    }
+
     setConnectionStatus(status: WebsocketConnectionStatus) {
         this.status = status;
-        console.log('Publishing status', status);
         PubSub.publish("websocket:status-change", status);
     }
 
@@ -79,7 +86,7 @@ export class WebsocketClient {
         client.onerror = function () {
             console.log('Connection Error');
             Spicetify.showNotification("Websocket connection error");
-            setConnectionStatus(WebsocketConnectionStatus.DISCONNECTED);
+            setConnectionStatus(WebsocketConnectionStatus.CONNECTION_ERROR);
         };
 
         client.onopen = function () {
@@ -91,10 +98,6 @@ export class WebsocketClient {
                 // Set up event handlers for incoming messages
                 registerEvents(websocketClient);
             }
-        };
-
-        client.onclose = function () {
-            setConnectionStatus(WebsocketConnectionStatus.DISCONNECTED);
         };
 
     }
