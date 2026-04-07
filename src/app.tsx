@@ -16,17 +16,22 @@ async function main() {
   const websocketClient = new WebsocketClient();
   globalThis.websocketClient = websocketClient;
 
-  const extraControls = document.querySelector(".main-nowPlayingBar-extraControls");
-  while (!extraControls) {
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
 
-  if (extraControls) {
-    const newContainer = document.createElement("div");
-    newContainer.style.pointerEvents = "all";
-    extraControls.insertBefore(newContainer, extraControls.firstElementChild);
-    ReactDOM.render(<WebsocketButton />, newContainer);
-  }
+  setTimeout(async () => {
+    const extraControls = document.querySelector(".main-nowPlayingBar-extraControls");
+    while (!extraControls) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    if (extraControls) {
+      console.log(extraControls);
+      const newContainer = document.createElement("div");
+      newContainer.style.pointerEvents = "all";
+      extraControls.insertBefore(newContainer, extraControls.firstElementChild);
+      ReactDOM.render(<WebsocketButton />, newContainer);
+    } else {
+      console.error("Could not find extra controls element");
+    }
+  }, 500);
 }
 
 export default main;
