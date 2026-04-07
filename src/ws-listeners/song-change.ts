@@ -27,4 +27,8 @@ const handleSongChange = (websocketClient: WebsocketClient) => {
 
 export const registerSongChangeListener = (websocketClient: WebsocketClient) => {
   Spicetify.Player.addEventListener("songchange", () => handleSongChange(websocketClient));
+
+  // Send initial song change event on registration so that the current song is sent to the server immediately
+  handleSongChange(websocketClient);
+
 }
