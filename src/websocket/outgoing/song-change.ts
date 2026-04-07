@@ -1,13 +1,11 @@
-import { WebsocketClient } from "../ws-api";
-import { WebsocketEvent } from "./types";
+import { WebsocketClient } from "../client";
+import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
 
 export type SongChangePayload = {
   title: string;
   artist: string;
   song: string;
 }
-
-const WS_EVENT_NAME = "UpdateSong";
 
 const handleSongChange = (websocketClient: WebsocketClient) => {
   const currentTrack = Spicetify.Player.data.item.name;
@@ -19,7 +17,7 @@ const handleSongChange = (websocketClient: WebsocketClient) => {
     song: currentTrack,
   };
   const objectToSend: WebsocketEvent<SongChangePayload> = {
-    eventName: WS_EVENT_NAME,
+    eventName: WEBSOCKET_OUTGOING_EVENT_TYPE.UPDATE_SONG,
     payload: payload,
   };
   websocketClient.sendWebsocketMessage(objectToSend);

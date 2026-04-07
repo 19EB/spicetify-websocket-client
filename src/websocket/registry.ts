@@ -1,9 +1,9 @@
-import { WebsocketClient } from "./ws-api";
-import { NextSongAction } from "./ws-events/next-song";
-import { PreviousSongAction } from "./ws-events/previous-song";
-import { SetVolumeAction } from "./ws-events/set-volume";
-import { WebsocketMessage } from "./ws-events/types";
-import { registerSongChangeListener } from "./ws-listeners/song-change";
+import { WebsocketMessage } from "./incoming/types";
+import { registerSongChangeListener } from "./outgoing/song-change";
+import { NextSongAction } from "./incoming/next-song";
+import { PreviousSongAction } from "./incoming/previous-song";
+import { SetVolumeAction } from "./incoming/set-volume";
+import { WebsocketClient } from "./client";
 
 let listenersRegistered = false;
 

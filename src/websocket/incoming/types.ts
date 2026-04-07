@@ -7,7 +7,7 @@ export enum WEBSOCKET_EVENT_TYPES {
 type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.NEXT_SONG]: {}; // No payload expected for this event
     [WEBSOCKET_EVENT_TYPES.PREVIOUS_SONG]: {}; // No payload expected for this event
-    [WEBSOCKET_EVENT_TYPES.SET_VOLUME]: {volume: number};
+    [WEBSOCKET_EVENT_TYPES.SET_VOLUME]: { volume: number };
 }
 
 export type WebsocketAction<K extends WEBSOCKET_EVENT_TYPES> = {

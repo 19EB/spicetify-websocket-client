@@ -1,7 +1,7 @@
-import { defaultWebsocketAddress, defaultWebsocketPort, settings } from "./config/settings";
-import { registerEvents, registerListeners } from "./registers";
-import { WebsocketConnectionStatus } from "./svg/WebsocketSvg";
-import { WebsocketEvent } from "./ws-listeners/types";
+import { defaultWebsocketAddress, defaultWebsocketPort, settings } from "../config/settings";
+import { registerEvents, registerListeners } from "./registry";
+import { WebsocketConnectionStatus } from "./types";
+import { WebsocketEvent } from "./outgoing/types";
 import PubSub from "pubsub-js";
 
 type WebsocketConfig = {

@@ -1,7 +1,6 @@
 import { useSyncExternalStore } from "react";
 import PubSub from "pubsub-js";
-
-import { WebsocketConnectionStatus } from "../svg/WebsocketSvg";
+import { WebsocketConnectionStatus } from "../../websocket/types";
 
 const getWebsocketStatusSnapshot = () => {
     return window.websocketClient?.getStatus() ?? WebsocketConnectionStatus.NOT_CONNECTED;
