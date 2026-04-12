@@ -17,7 +17,7 @@ const handleSongChange = (websocketClient: WebsocketClient) => {
     song: currentTrack,
   };
   const objectToSend: WebsocketEvent<SongChangePayload> = {
-    eventName: WEBSOCKET_OUTGOING_EVENT_TYPE.UPDATE_SONG,
+    eventName: WEBSOCKET_OUTGOING_EVENT_TYPE.SONG_CHANGED,
     payload: payload,
   };
   websocketClient.sendWebsocketMessage(objectToSend);

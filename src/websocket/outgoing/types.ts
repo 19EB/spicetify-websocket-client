@@ -1,5 +1,5 @@
 export enum WEBSOCKET_OUTGOING_EVENT_TYPE {
-    UPDATE_SONG = "UpdateSong",
+    SONG_CHANGED = "SongChanged",
 }
 
 
