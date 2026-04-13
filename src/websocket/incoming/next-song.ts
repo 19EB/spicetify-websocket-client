@@ -4,7 +4,7 @@ function playNextSong() {
     Spicetify.Player.next();
 }
 
-export const NextSongAction: WebsocketAction<WEBSOCKET_EVENT_TYPES.NEXT_SONG> = {
+export const NextSongAction: WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.NEXT_SONG,
     execute: playNextSong
 }
