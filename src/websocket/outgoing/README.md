@@ -30,7 +30,7 @@ Update `types.ts`.
 
 ```ts
 export enum WEBSOCKET_OUTGOING_EVENT_TYPE {
-    UPDATE_SONG = "UpdateSong",
+    SONG_CHANGED = "SongChanged",
     PLAY_PAUSE_CHANGED = "PlayPauseChanged",
 }
 ```

@@ -76,7 +76,7 @@ Available settings:
 
 Outgoing event:
 
-- `UpdateSong`
+- `SongChanged`
 
 Incoming events:
 

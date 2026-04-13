@@ -66,20 +66,20 @@ function togglePlay() {
     Spicetify.Player.togglePlay();
 }
 
-export const TogglePlayAction: WebsocketAction<WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY> = {
+export const TogglePlayAction: WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY,
     execute: togglePlay,
 };
 ```
 
-If the event has a payload, use it inside `execute`.
+If the event has a payload, use `message.payload` inside `execute`.
 
 Example:
 
 ```ts
-export const SeekAction: WebsocketAction<WEBSOCKET_EVENT_TYPES.SEEK> = {
+export const SeekAction: WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.SEEK,
-    execute: (payload) => Spicetify.Player.seek(payload.positionMs),
+    execute: (message) => Spicetify.Player.seek(message.payload.positionMs),
 };
 ```
 
