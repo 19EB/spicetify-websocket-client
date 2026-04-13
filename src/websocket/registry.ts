@@ -1,4 +1,4 @@
-import { WebsocketMessage } from "./incoming/types";
+import { WebsocketAction, WebsocketMessage } from "./incoming/types";
 import { registerSongChangeListener } from "./outgoing/song-change";
 import { NextSongAction } from "./incoming/next-song";
 import { PreviousSongAction } from "./incoming/previous-song";
@@ -16,11 +16,18 @@ export const registerListeners = (websocketClient: WebsocketClient) => {
     listenersRegistered = true;
 }
 
-const eventHandlers = [
+const eventHandlers: WebsocketAction[] = [
     NextSongAction,
     PreviousSongAction,
     SetVolumeAction,
 ]
+
+export const isActionForMessage = <T extends WebsocketMessage>(
+    action: WebsocketAction,
+    message: T
+): action is Extract<WebsocketAction, { eventName: T["eventName"] }> & { execute: (msg: T) => void } => {
+    return action.eventName === message.eventName;
+};
 
 export const registerEvents = (websocketClient: WebsocketClient) => {
     const ws = websocketClient.getWebsocket();
@@ -31,10 +38,10 @@ export const registerEvents = (websocketClient: WebsocketClient) => {
 
     ws.onmessage = function (message) {
         const { data } = message;
-        const parsed: WebsocketMessage<any> = JSON.parse(data);
+        const parsed: WebsocketMessage = JSON.parse(data);
         const foundAction = eventHandlers.find(action => action.eventName === parsed.eventName);
-        if (foundAction) {
-            foundAction.execute(parsed.payload);
+        if (foundAction && isActionForMessage(foundAction, parsed)) {
+            foundAction.execute(parsed);
         } else {
             console.log(`No handler found for event type: ${parsed.eventName}`);
         }
