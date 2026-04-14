@@ -8,8 +8,16 @@ export type SongChangePayload = {
 }
 
 const handleSongChange = (websocketClient: WebsocketClient) => {
-  const currentTrack = Spicetify.Player.data.item.name;
-  const artistList = Spicetify.Player.data.item.artists ?? [];
+
+  const currentItem = Spicetify.Player.data.item ?? null;
+
+  if (!currentItem) {
+    console.warn('No current track data available');
+    return;
+  }
+
+  const currentTrack = currentItem.name;
+  const artistList = currentItem.artists ?? [];
   const currentArtist = artistList.map(artist => artist.name).join(', ');
   const payload: SongChangePayload = {
     title: `${currentTrack} by ${currentArtist}`,
