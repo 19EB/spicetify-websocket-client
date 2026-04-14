@@ -27,6 +27,7 @@ import { AddToQueueContextTracksAction } from "./incoming/add-to-queue-context-t
 import { RemoveFromQueueUriAction } from "./incoming/remove-from-queue-uri";
 import { RemoveFromQueueUrlAction } from "./incoming/remove-from-queue-url";
 import { RemoveFromQueueContextTracksAction } from "./incoming/remove-from-queue-context-tracks";
+import { ClearQueueAction, clearQueueAction } from "./incoming/clear-queue";
 
 import { WebsocketClient } from "./client";
 
@@ -70,7 +71,7 @@ const eventHandlers: WebsocketAction[] = [
     RemoveFromQueueUriAction,
     RemoveFromQueueUrlAction,
     RemoveFromQueueContextTracksAction,
-
+    ClearQueueAction
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(
