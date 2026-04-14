@@ -31,10 +31,28 @@ const handleSongChange = (websocketClient: WebsocketClient) => {
   websocketClient.sendWebsocketMessage(objectToSend);
 }
 
+const sendInitialSongChange = (websocketClient: WebsocketClient) => {
+  return new Promise(async (resolve, reject) => {
+    const maxTriesMs = 3000; // Maximum time to keep trying (3 seconds)
+    const intervalMs = 100; // Interval between tries (100 ms)
+    const startTime = Date.now();
+    while (!Spicetify.Player.data?.item) {
+      if (Date.now() - startTime > maxTriesMs) {
+        console.warn('Could not get current track data after 3 seconds, giving up');
+        reject(new Error('Could not get current track data after 3 seconds'));
+        return;
+      } else {
+        await new Promise(resolve => setTimeout(resolve, intervalMs));
+      }
+    }
+    // Send initial song change event on registration so that the current song is sent to the server immediately
+    handleSongChange(websocketClient);
+    resolve(true);
+  });
+}
+
+
 export const registerSongChangeListener = (websocketClient: WebsocketClient) => {
   Spicetify.Player.addEventListener("songchange", () => handleSongChange(websocketClient));
-
-  // Send initial song change event on registration so that the current song is sent to the server immediately
-  handleSongChange(websocketClient);
-
+  sendInitialSongChange(websocketClient);
 }
