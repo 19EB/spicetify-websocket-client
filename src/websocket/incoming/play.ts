@@ -4,7 +4,7 @@ function play() {
     Spicetify.Player.play();
 }
 
-export const PlayAction = {
+export const PlayAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.PLAY,
     execute: play
 }

@@ -4,7 +4,7 @@ function seek(position : number) {
     Spicetify.Player.seek(position);
 }
 
-export const SeekAction: WebsocketAction = {
+export const SeekAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.SEEK,
     execute: (message) => seek(message.payload.position)
 }

@@ -5,7 +5,7 @@ function playPreviousSong() {
     Spicetify.Player.back();
 }
 
-export const PreviousSongAction: WebsocketAction = {
+export const PreviousSongAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.PREVIOUS_SONG,
     execute: playPreviousSong
 }

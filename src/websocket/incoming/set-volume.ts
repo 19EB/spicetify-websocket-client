@@ -6,7 +6,7 @@ function setVolume(level: number) {
     Spicetify.Player.setVolume(clamped);
 }
 
-export const SetVolumeAction: WebsocketAction = {
+export const SetVolumeAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.SET_VOLUME,
     execute: (message) => setVolume(message.payload.level)
 }

@@ -20,7 +20,16 @@ import { DecreaseVolumeAction } from "./incoming/decrease-volume";
 import { IncreaseVolumeAction } from "./incoming/increase-volume";
 import { SetMuteAction } from "./incoming/set-mute";
 import { ToggleMuteAction } from "./incoming/toggle-mute";
+
+import { AddToQueueUriAction } from "./incoming/add-to-queue-uri";
+import { AddToQueueUrlAction } from "./incoming/add-to-queue-url";
+import { AddToQueueContextTracksAction } from "./incoming/add-to-queue-context-tracks";
+import { RemoveFromQueueUriAction } from "./incoming/remove-from-queue-uri";
+import { RemoveFromQueueUrlAction } from "./incoming/remove-from-queue-url";
+import { RemoveFromQueueContextTracksAction } from "./incoming/remove-from-queue-context-tracks";
+
 import { WebsocketClient } from "./client";
+
 
 let listenersRegistered = false;
 
@@ -54,6 +63,14 @@ const eventHandlers: WebsocketAction[] = [
     IncreaseVolumeAction,
     SetMuteAction,
     ToggleMuteAction,
+
+    AddToQueueUriAction,
+    AddToQueueUrlAction,
+    AddToQueueContextTracksAction,
+    RemoveFromQueueUriAction,
+    RemoveFromQueueUrlAction,
+    RemoveFromQueueContextTracksAction,
+
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(

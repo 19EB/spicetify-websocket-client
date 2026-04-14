@@ -4,7 +4,7 @@ function increaseVolume() {
     Spicetify.Player.increaseVolume();
 }
 
-export const IncreaseVolumeAction: WebsocketAction = {
+export const IncreaseVolumeAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.INCREASE_VOLUME,
     execute: increaseVolume
 }
