@@ -4,7 +4,7 @@ function toggleRepeat() {
     Spicetify.Player.toggleRepeat();
 }
 
-export const ToggleRepeatAction: WebsocketAction = {
+export const ToggleRepeatAction : WebsocketAction = {
     eventName: WEBSOCKET_EVENT_TYPES.TOGGLE_REPEAT,
     execute: toggleRepeat
 }
