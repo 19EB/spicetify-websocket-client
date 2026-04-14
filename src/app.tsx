@@ -7,7 +7,7 @@ const { React, ReactDOM } = Spicetify;
 
 async function main() {
   // Wait for Spicetify to be ready
-  while (!Spicetify?.showNotification) {
+  while (!Spicetify?.showNotification || !Spicetify?.Player) {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 

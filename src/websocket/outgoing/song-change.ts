@@ -9,7 +9,7 @@ export type SongChangePayload = {
 
 const handleSongChange = (websocketClient: WebsocketClient) => {
 
-  const currentItem = Spicetify.Player.data.item ?? null;
+  const currentItem = Spicetify.Player.data?.item ?? null;
 
   if (!currentItem) {
     console.warn('No current track data available');
