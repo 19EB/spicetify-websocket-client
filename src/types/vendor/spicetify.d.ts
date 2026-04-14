@@ -489,6 +489,11 @@ declare namespace Spicetify {
 		 */
 		function skipForward(amount?: number): void;
 		/**
+		 * Set Heart (Favourite) track state.
+		 * @param state
+		 */
+		function setHeart(state: boolean): void;
+		/**
 		 * Toggle Heart (Favourite) track state.
 		 */
 		function toggleHeart(): void;
@@ -1175,6 +1180,14 @@ declare namespace Spicetify {
 		static stationURI(args: string[]): URI;
 
 		/**
+		 * Creates a new 'playlist' type URI.
+		 * 
+		 * @param id The id of the playlist.
+		 * @return The playlist URI.
+		 */
+		static playlistURI(id: string): URI;
+
+		/**
 		 * Creates a new 'track' type URI.
 		 *
 		 * @param id The id of the track.
@@ -1749,6 +1762,10 @@ declare namespace Spicetify {
 			onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
 			onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
 		};
+		const ContextMenuV2: any;
+		const ReactJSX: any;
+		const _renderNavLinks: any;
+
 		/**
 		 * Generic context menu provider
 		 *
@@ -1852,6 +1869,19 @@ declare namespace Spicetify {
 		 * @see Spicetify.ReactComponent.ButtonProps
 		 */
 		const ButtonTertiary: any;
+		const Snackbar: any;
+		const Chip: any;
+		const Toggle: any;
+		const Cards: Record<string, any>;
+		const Router: any;
+		const Routes: any;
+		const Route: any;
+		const StoreProvider: any;
+		const PlatformProvider: any;
+		const Dropdown: any;
+		const MenuSubMenuItem: any;
+		const Navigation: any;
+		const ScrollableContainer: any;
 	}
 
 	/**
@@ -2395,4 +2425,31 @@ declare namespace Spicetify {
 		 */
 		function toLocaleUpperCase(text: string): string;
 	}
+
+	namespace Snackbar {
+		const SnackbarProvider: any;
+		const useSnackbar: any;
+		function enqueueSnackbar(message: string | React.ReactNode, options?: any): void;
+	}
+
+	const Events: {
+		platformLoaded: {
+			on: (callback: () => void) => void;
+			fire: () => void;
+		};
+		webpackLoaded: {
+			on: (callback: () => void) => void;
+			fire: () => void;
+		};
+		[key: string]: any;
+	};
+
+	const _getStyledClassName: (args: any, component: any) => string;
+	const _reservedPanelIds: Record<string, any>;
+	const _platform: any;
+
+	const test: () => void;
+	const expFeatureOverride: () => any;
+	const createInternalMap: () => any;
+	const RemoteConfigResolver: any;
 }
