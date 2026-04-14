@@ -4,9 +4,22 @@ import { PlayAction } from "./incoming/play";
 import { PlayUriAction } from "./incoming/play-uri";
 import { PlayUrlAction } from "./incoming/play-url";
 import { PauseAction } from "./incoming/pause";
+import { TogglePlayAction } from "./incoming/toggle-play";
 import { NextSongAction } from "./incoming/next-song";
+import { BackAction } from "./incoming/back";
 import { PreviousSongAction } from "./incoming/previous-song";
+import { SkipForwardAction } from "./incoming/skip-forward";
+import { SkipBackAction } from "./incoming/skip-back";
+import { SeekAction } from "./incoming/seek";
+import { SetShuffleAction } from "./incoming/set-shuffle";
+import { ToggleShuffleAction } from "./incoming/toggle-shuffle";
+import { SetRepeatAction } from "./incoming/set-repeat";
+import { ToggleRepeatAction } from "./incoming/toggle-repeat";
 import { SetVolumeAction } from "./incoming/set-volume";
+import { DecreaseVolumeAction } from "./incoming/decrease-volume";
+import { IncreaseVolumeAction } from "./incoming/increase-volume";
+import { SetMuteAction } from "./incoming/set-mute";
+import { ToggleMuteAction } from "./incoming/toggle-mute";
 import { WebsocketClient } from "./client";
 
 let listenersRegistered = false;
@@ -25,9 +38,22 @@ const eventHandlers: WebsocketAction[] = [
     PlayUriAction,
     PlayUrlAction,
     PauseAction,
+    TogglePlayAction,
     NextSongAction,
+    BackAction,
     PreviousSongAction,
+    SkipForwardAction,
+    SkipBackAction,
+    SeekAction,
+    SetShuffleAction,
+    ToggleShuffleAction,
+    SetRepeatAction,
+    ToggleRepeatAction,
     SetVolumeAction,
+    DecreaseVolumeAction,
+    IncreaseVolumeAction,
+    SetMuteAction,
+    ToggleMuteAction,
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(
