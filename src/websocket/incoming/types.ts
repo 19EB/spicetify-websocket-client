@@ -19,7 +19,6 @@ export enum WEBSOCKET_EVENT_TYPES {
     INCREASE_VOLUME = "IncreaseVolume",
     SET_MUTE = "SetMute", 
     TOGGLE_MUTE = "ToggleMute",
-
     ADD_TO_QUEUE_URI = "AddToQueueUri",
     ADD_TO_QUEUE_URL = "AddToQueueUrl",
     ADD_TO_QUEUE_CONTEXT_TRACKS = "AddToQueueContextTracks",
@@ -27,6 +26,9 @@ export enum WEBSOCKET_EVENT_TYPES {
     REMOVE_FROM_QUEUE_URL = "RemoveFromQueueUrl",
     REMOVE_FROM_QUEUE_CONTEXT_TRACKS = "RemoveFromQueueContextTracks",
     CLEAR_QUEUE = "ClearQueue",
+    SET_HEART = "SetHeart",
+    TOGGLE_HEART = "ToggleHeart"
+
 }
 
 type CommonWebsocketMessage = {
@@ -54,7 +56,6 @@ type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.INCREASE_VOLUME]: {}; //done
     [WEBSOCKET_EVENT_TYPES.SET_MUTE]: { state: boolean }; //done
     [WEBSOCKET_EVENT_TYPES.TOGGLE_MUTE]: {}; //done
-
     [WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_URI]: { uri : string };
     [WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_URL]: { url : string };
     [WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_CONTEXT_TRACKS]: { contextTracks : ContextTrack[] };
@@ -62,6 +63,8 @@ type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL]: { url : string };
     [WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_CONTEXT_TRACKS]: { contextTracks : ContextTrack[] };
     [WEBSOCKET_EVENT_TYPES.CLEAR_QUEUE]: {};
+    [WEBSOCKET_EVENT_TYPES.SET_HEART]: { status : boolean };
+    [WEBSOCKET_EVENT_TYPES.TOGGLE_HEART]: {};
 }
 
 export type WebsocketMessageGuard<K extends WEBSOCKET_EVENT_TYPES> = {
