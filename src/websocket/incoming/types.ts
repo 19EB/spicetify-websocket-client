@@ -28,7 +28,6 @@ export enum WEBSOCKET_EVENT_TYPES {
     CLEAR_QUEUE = "ClearQueue",
     SET_HEART = "SetHeart",
     TOGGLE_HEART = "ToggleHeart"
-
 }
 
 type CommonWebsocketMessage = {
