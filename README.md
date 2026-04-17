@@ -90,70 +90,288 @@ Available settings:
 
 ### Websocket events
 
-Outgoing event:
+#### Outgoing events
+The extension currently emits the following outgoing event to the server.
 
 - `SongChanged`
+Whenever the song is changed or upon initial connection, a `SongChanged` event is sent with information about the newly playing track:
+```json5
+{
+    "eventName": "SongChanged",
+    "payload": {
+        "title": "SongName by ArtistName",
+        "artist": "ArtistName",
+        "song": "SongName"
+    }
+}
+```
 
-Incoming events:
-
-- `NextSong`
-- `PreviousSong`
-- `SetVolume`
-
-## Sending websocket requests
-
-Once this extension is connected to your websocket server, your server can send requests to perform various actions in the Spotify client. These requests are to be sent as JSON strings that are generally structured as follows:
+#### Incoming events
+The extension listens to the following incoming events (requests) from the server. These requests are to be sent as JSON strings that are generally structured as follows:
 
 ```json5
 {
-   "eventName":"<request>",
-   "payload":{              // Omitted unless required
+   "eventName": "<request>",
+   "payload": {              // Omitted unless required
       "<arg>": <value>
    }
 }
 ```
 
-### Basic requests
-
-The requests `Play`, `Pause`, `TogglePlay`, `NextSong`, `Back`, `PreviousSong`, `ToggleShuffle`, `ToggleRepeat`, `DecreaseVolume`, `IncreaseVolume`, `ToggleMute` and `ToggleHeart` can simply be sent with their name as the value of `eventName`. 
-
-#### Example: a `Play` request
-
+##### `Play`
+Resumes playback.
 ```json5
-{
-    "eventName" : "Play"
-}
-
+{ "eventName": "Play" }
 ```
 
-### Requests with arguments
+##### `Pause`
+Pauses playback.
+```json5
+{ "eventName": "Pause" }
+```
 
-#### Requests using URI
-To play a specific track, add that track to the queue or remove that track from the queue, we have `PlayUri`, `AddToQueueUri` and `RemoveFromQueueUri`. These requests must include the unique URI of the specificied track as the string argument `uri` inside `payload`. Every track in Spotify has a unique URI, formatted as `spotify:track:<id>`. Click [here](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) to learn more about Spotify URIs. 
+##### `TogglePlay`
+Toggles between play and pause.
+```json5
+{ "eventName": "TogglePlay" }
+```
 
+##### `NextSong`
+Skips to the next song.
+```json5
+{ "eventName": "NextSong" }
+```
 
+##### `PreviousSong`
+Plays the previous song.
+```json5
+{ "eventName": "PreviousSong" }
+```
 
-#### Example: a `PlayUri` request
+##### `Back`
+Skips back to the beginning of the track or the previous song.
+```json5
+{ "eventName": "Back" }
+```
 
+##### `ToggleShuffle`
+Toggles the shuffle state.
+```json5
+{ "eventName": "ToggleShuffle" }
+```
+
+##### `ToggleRepeat`
+Toggles the repeat state.
+```json5
+{ "eventName": "ToggleRepeat" }
+```
+
+##### `DecreaseVolume`
+Decreases the volume.
+```json5
+{ "eventName": "DecreaseVolume" }
+```
+
+##### `IncreaseVolume`
+Increases the volume.
+```json5
+{ "eventName": "IncreaseVolume" }
+```
+
+##### `ToggleMute`
+Toggles between muted and unmuted.
+```json5
+{ "eventName": "ToggleMute" }
+```
+
+##### `ToggleHeart`
+Toggles the like/heart status of the current track.
+```json5
+{ "eventName": "ToggleHeart" }
+```
+
+##### `ClearQueue`
+Clears the user's queue.
+```json5
+{ "eventName": "ClearQueue" }
+```
+
+##### `PlayUri`
+Plays a track based on its Spotify URI.
 ```json5
 {
-    "eventName" : "PlayUri",
-    "payload" : {
-        "uri" : "spotify:track:5cP52DlDN9yryuZVQDg3iq"
+    "eventName": "PlayUri",
+    "payload": {
+        "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq"
     }
 }
 ```
 
-#### Requests using URL
-The requests `PlayUrl`, `AddToQueueURL` and `RemoveFromQueueUrl` work similarly, but require the song link instead, which is sent as the string argument `uri`.
-
-#### Example: a `PlayUrl` request
-
+##### `AddToQueueUri`
+Adds a track to the queue based on its Spotify URI.
 ```json5
 {
-    "eventName" : "PlayUrl",
-    "payload" : {
-        "url" : "https://open.spotify.com/track/3mRM4NM8iO7UBqrSigCQFH?si=eeaec6fba1a74821"
+    "eventName": "AddToQueueUri",
+    "payload": {
+        "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq"
+    }
+}
+```
+
+##### `RemoveFromQueueUri`
+Removes a track from the queue based on its Spotify URI.
+```json5
+{
+    "eventName": "RemoveFromQueueUri",
+    "payload": {
+        "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq"
+    }
+}
+```
+
+##### `PlayUrl`
+Plays a track based on its Spotify URL.
+```json5
+{
+    "eventName": "PlayUrl",
+    "payload": {
+        "url": "https://open.spotify.com/track/3mRM4NM8iO7UBqrSigCQFH?si=eeaec6fba1a74821"
+    }
+}
+```
+
+##### `AddToQueueUrl`
+Adds a track to the queue based on its Spotify URL.
+```json5
+{
+    "eventName": "AddToQueueUrl",
+    "payload": {
+        "url": "https://open.spotify.com/track/3mRM4NM8iO7UBqrSigCQFH?si=eeaec6fba1a74821"
+    }
+}
+```
+
+##### `RemoveFromQueueUrl`
+Removes a track from the queue based on its Spotify URL.
+```json5
+{
+    "eventName": "RemoveFromQueueUrl",
+    "payload": {
+        "url": "https://open.spotify.com/track/3mRM4NM8iO7UBqrSigCQFH?si=eeaec6fba1a74821"
+    }
+}
+```
+
+##### `AddToQueueContextTracks`
+Adds an array of context tracks to the queue.
+```json5
+{
+    "eventName": "AddToQueueContextTracks",
+    "payload": {
+        "contextTracks": [
+            { "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq" }
+        ]
+    }
+}
+```
+
+##### `RemoveFromQueueContextTracks`
+Removes an array of context tracks from the queue.
+```json5
+{
+    "eventName": "RemoveFromQueueContextTracks",
+    "payload": {
+        "contextTracks": [
+            { "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq" }
+        ]
+    }
+}
+```
+
+##### `SetShuffle`
+Sets the shuffle state (true or false).
+```json5
+{
+    "eventName": "SetShuffle",
+    "payload": {
+        "state": true
+    }
+}
+```
+
+##### `SetMute`
+Sets the mute state (true or false).
+```json5
+{
+    "eventName": "SetMute",
+    "payload": {
+        "state": true
+    }
+}
+```
+
+##### `SetHeart`
+Sets the like/heart status of a track (true or false).
+```json5
+{
+    "eventName": "SetHeart",
+    "payload": {
+        "status": true
+    }
+}
+```
+
+##### `SetVolume`
+Sets the volume level (number, 0 to 100).
+```json5
+{
+    "eventName": "SetVolume",
+    "payload": {
+        "level": 50
+    }
+}
+```
+
+##### `SetRepeat`
+Sets the repeat mode (number, e.g., 0, 1, 2).
+```json5
+{
+    "eventName": "SetRepeat",
+    "payload": {
+        "mode": 1
+    }
+}
+```
+
+##### `Seek`
+Seeks to a specific position (number of milliseconds from start).
+```json5
+{
+    "eventName": "Seek",
+    "payload": {
+        "position": 60000
+    }
+}
+```
+
+##### `SkipForward`
+Skips forward by the specified amount (number of milliseconds).
+```json5
+{
+    "eventName": "SkipForward",
+    "payload": {
+        "amount": 15000
+    }
+}
+```
+
+##### `SkipBack`
+Skips backward by the specified amount (number of milliseconds).
+```json5
+{
+    "eventName": "SkipBack",
+    "payload": {
+        "amount": 15000
     }
 }
 ```
