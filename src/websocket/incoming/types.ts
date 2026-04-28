@@ -27,7 +27,10 @@ export enum WEBSOCKET_EVENT_TYPES {
     REMOVE_FROM_QUEUE_URL = "RemoveFromQueueUrl",
     CLEAR_QUEUE = "ClearQueue",
     SET_HEART = "SetHeart",
-    TOGGLE_HEART = "ToggleHeart"
+    TOGGLE_HEART = "ToggleHeart",
+
+    GET_DURATION = "GetDuration",
+    GET_MUTE = "GetMute",
 }
 
 type CommonWebsocketMessage = {
@@ -63,6 +66,9 @@ type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.CLEAR_QUEUE]: {};
     [WEBSOCKET_EVENT_TYPES.SET_HEART]: { status: boolean };
     [WEBSOCKET_EVENT_TYPES.TOGGLE_HEART]: {};
+
+    [WEBSOCKET_EVENT_TYPES.GET_DURATION]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_MUTE]: {};
 }
 
 export type WebsocketMessageGuard<K extends WEBSOCKET_EVENT_TYPES> = {

@@ -28,7 +28,10 @@ import { ClearQueueAction } from "./incoming/clear-queue";
 import { SetHeartAction } from "./incoming/set-heart";
 import { ToggleHeartAction } from "./incoming/toggle-heart";
 
+import { GetDurationAction } from "./incoming/get-duration";
+
 import { WebsocketClient } from "./client";
+
 
 
 let listenersRegistered = false;
@@ -69,7 +72,9 @@ const eventHandlers: WebsocketAction[] = [
     RemoveFromQueueUrlAction,
     ClearQueueAction,
     SetHeartAction,
-    ToggleHeartAction
+    ToggleHeartAction,
+
+    GetDurationAction,
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(
