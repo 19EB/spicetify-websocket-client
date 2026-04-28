@@ -1,17 +1,52 @@
-import { WEBSOCKET_EVENT_TYPES, WebsocketAction } from "./types";
+import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { spotifyUrlToUri } from "./util";
+import { WebsocketClient } from "../client";
+import { WebsocketResponse } from "../outgoing/types";
+import { safeParseUri } from "./util";
 
-function removeFromQueueUrl(url : string) {
+type RemoveFromQueueUrlPayload = {
+    url: string;
+}
+
+function removeFromQueueUrl(uri: string) {
+    Spicetify.removeFromQueue([{ uri: uri }]);
+}
+
+function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL>) {
+    const url = websocketMessage.payload.url;
     const uri = spotifyUrlToUri(url);
 
-    if(uri == null) {
-        return;
+    const requestId = websocketMessage.requestId;
+    const callback = websocketMessage.callback;
+    const trackUri = safeParseUri(uri);
+    let isTrackUri: boolean;
+
+    if (trackUri == null || uri == null) {
+        isTrackUri = false;
+    } else if (trackUri.type !== "track") {
+        isTrackUri = false;
     } else {
-        Spicetify.removeFromQueue([{uri : uri }]);
+        removeFromQueueUrl(uri);
+        isTrackUri = true;
+    }
+
+    if (callback == undefined || callback === true) {
+        const response: WebsocketResponse<RemoveFromQueueUrlPayload> = {
+            eventName: "Response",
+            status: isTrackUri ? "ok" : "error",
+            message: isTrackUri ? undefined : `Failed to remove URL: ${url}. Invalid Spotify track URL.`,
+            requestName: WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL,
+            requestId: requestId,
+            payload: {
+                url: url
+            }
+        };
+
+        websocketClient.sendWebsocketMessage(response);
     }
 }
 
 export const RemoveFromQueueUrlAction : WebsocketAction = {
-    eventName: WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL,
-    execute: (message) => removeFromQueueUrl(message.payload.url)
+    requestName: WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL,
+    execute: (message, websocketClient) => handleRequest(websocketClient, message)
 }

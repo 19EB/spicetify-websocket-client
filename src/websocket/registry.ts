@@ -1,4 +1,4 @@
-import { WebsocketAction, WebsocketMessage } from "./incoming/types";
+import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage } from "./incoming/types";
 import { registerSongChangeListener } from "./outgoing/song-change";
 import { PlayAction } from "./incoming/play";
 import { PlayUriAction } from "./incoming/play-uri";
@@ -22,15 +22,16 @@ import { SetMuteAction } from "./incoming/set-mute";
 import { ToggleMuteAction } from "./incoming/toggle-mute";
 import { AddToQueueUriAction } from "./incoming/add-to-queue-uri";
 import { AddToQueueUrlAction } from "./incoming/add-to-queue-url";
-import { AddToQueueContextTracksAction } from "./incoming/add-to-queue-context-tracks";
 import { RemoveFromQueueUriAction } from "./incoming/remove-from-queue-uri";
 import { RemoveFromQueueUrlAction } from "./incoming/remove-from-queue-url";
-import { RemoveFromQueueContextTracksAction } from "./incoming/remove-from-queue-context-tracks";
-import { ClearQueueAction} from "./incoming/clear-queue";
+import { ClearQueueAction } from "./incoming/clear-queue";
 import { SetHeartAction } from "./incoming/set-heart";
 import { ToggleHeartAction } from "./incoming/toggle-heart";
 
+import { GetDurationAction } from "./incoming/get-duration";
+
 import { WebsocketClient } from "./client";
+
 
 
 let listenersRegistered = false;
@@ -65,24 +66,24 @@ const eventHandlers: WebsocketAction[] = [
     IncreaseVolumeAction,
     SetMuteAction,
     ToggleMuteAction,
-
     AddToQueueUriAction,
     AddToQueueUrlAction,
-    AddToQueueContextTracksAction,
     RemoveFromQueueUriAction,
     RemoveFromQueueUrlAction,
-    RemoveFromQueueContextTracksAction,
     ClearQueueAction,
     SetHeartAction,
-    ToggleHeartAction
+    ToggleHeartAction,
+
+    GetDurationAction,
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(
     action: WebsocketAction,
     message: T
-): action is Extract<WebsocketAction, { eventName: T["eventName"] }> & { execute: (msg: T) => void } => {
-    return action.eventName === message.eventName;
+): action is Extract<WebsocketAction, { requestName: T["requestName"] }> & { execute: (msg: T, websocketClient: WebsocketClient) => void } => {
+    return action.requestName === message.requestName;
 };
+
 
 export const registerEvents = (websocketClient: WebsocketClient) => {
     const ws = websocketClient.getWebsocket();
@@ -92,14 +93,34 @@ export const registerEvents = (websocketClient: WebsocketClient) => {
     }
 
     ws.onmessage = function (message) {
-        const { data } = message;
-        const parsed: WebsocketMessage = JSON.parse(data);
-        const foundAction = eventHandlers.find(action => action.eventName === parsed.eventName);
-        if (foundAction && isActionForMessage(foundAction, parsed)) {
-            foundAction.execute(parsed);
-        } else {
-            console.log(`No handler found for event type: ${parsed.eventName}`);
+        try {
+            const { data } = message;
+            const parsed: WebsocketMessage = JSON.parse(data);
+
+            const foundAction = eventHandlers.find(action => action.requestName === parsed.requestName);
+            if (foundAction && isActionForMessage(foundAction, parsed)) {
+                foundAction.execute(parsed, websocketClient);
+            } else {
+                console.log(`No handler found for event type: ${parsed.requestName}`);
+                websocketClient.sendWebsocketMessage(
+                    {
+                        eventName: "Response",
+                        status: "error",
+                        message: `No handler found for event type: ${parsed.requestName}`,
+                        requestName: parsed.requestName,
+                        requestId: parsed.requestId ?? undefined
+                    }
+                )
+            }
+        } catch (error) {
+            console.error("Error handling incoming message:", error);
+            websocketClient.sendWebsocketMessage(
+                {
+                    eventName: "Response",
+                    status: "error",
+                    message: `Error handling message: ${error instanceof Error ? error.message : String(error)}`
+                }
+            );
         }
     };
-
 }

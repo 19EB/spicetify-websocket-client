@@ -1,33 +1,23 @@
 import { WebsocketClient } from "../client";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
-
-export type SongChangePayload = {
-  title: string;
-  artist: string;
-  song: string;
-}
+import { PlayerTrack } from "./types";
+import { toPlayerTrack } from "../incoming/util";
 
 const handleSongChange = (websocketClient: WebsocketClient) => {
 
-  const currentItem = Spicetify.Player.data?.item ?? null;
+  const currentItem = Spicetify.Player.data?.item ?? undefined;
+  const currentTrack = toPlayerTrack(currentItem);
 
-  if (!currentItem) {
+  if (!currentTrack) {
     console.warn('No current track data available');
     return;
   }
 
-  const currentTrack = currentItem.name;
-  const artistList = currentItem.artists ?? [];
-  const currentArtist = artistList.map(artist => artist.name).join(', ');
-  const payload: SongChangePayload = {
-    title: `${currentTrack} by ${currentArtist}`,
-    artist: currentArtist,
-    song: currentTrack,
-  };
-  const objectToSend: WebsocketEvent<SongChangePayload> = {
+  const objectToSend: WebsocketEvent<PlayerTrack> = {
     eventName: WEBSOCKET_OUTGOING_EVENT_TYPE.SONG_CHANGED,
-    payload: payload,
+    payload: currentTrack,
   };
+  
   websocketClient.sendWebsocketMessage(objectToSend);
 }
 
