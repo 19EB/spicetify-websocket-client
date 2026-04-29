@@ -123,36 +123,36 @@ The old `SongChanged` payload containing `title`, `artist`, and `song` has been 
 
 ```json5
 {
-    "eventName": "SongChanged",
-    "payload": {
-        "type": "track",
-        "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
-        "name": "SongName",
-        "mediaType": "audio",
-        "duration": 225000,
-        "album": {
-            "uri": "spotify:album:albumId",
-            "name": "AlbumName",
-            "images": [
-                {
-                    "url": "https://...",
-                    "label": "standard"
-                }
-            ]
-        },
-        "artists": [
-            {
-                "uri": "spotify:artist:artistId",
-                "name": "ArtistName"
-            }
-        ],
-        "images": [
-            {
-                "url": "https://...",
-                "label": "standard"
-            }
-        ]
-    }
+  "eventName": "SongChanged",
+  "payload": {
+    "type": "track",
+    "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
+    "name": "SongName",
+    "mediaType": "audio",
+    "duration": 225000,
+    "album": {
+      "uri": "spotify:album:albumId",
+      "name": "AlbumName",
+      "images": [
+        {
+          "url": "https://...",
+          "label": "standard"
+        }
+      ]
+    },
+    "artists": [
+      {
+        "uri": "spotify:artist:artistId",
+        "name": "ArtistName"
+      }
+    ],
+    "images": [
+      {
+        "url": "https://...",
+        "label": "standard"
+      }
+    ]
+  }
 }
 ```
 
@@ -346,33 +346,33 @@ These requests read from `Spicetify.Player.data`.
 
 ```json5
 {
-    "type": "track",
-    "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
-    "name": "SongName",
-    "mediaType": "audio",
-    "duration": 225000,
-    "album": {
-        "uri": "spotify:album:albumId",
-        "name": "AlbumName",
-        "images": [
-            {
-                "url": "https://...",
-                "label": "standard"
-            }
-        ]
-    },
-    "artists": [
-        {
-            "uri": "spotify:artist:artistId",
-            "name": "ArtistName"
-        }
-    ],
+  "type": "track",
+  "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
+  "name": "SongName",
+  "mediaType": "audio",
+  "duration": 225000,
+  "album": {
+    "uri": "spotify:album:albumId",
+    "name": "AlbumName",
     "images": [
-        {
-            "url": "https://...",
-            "label": "standard"
-        }
+      {
+        "url": "https://...",
+        "label": "standard"
+      }
     ]
+  },
+  "artists": [
+    {
+      "uri": "spotify:artist:artistId",
+      "name": "ArtistName"
+    }
+  ],
+  "images": [
+    {
+      "url": "https://...",
+      "label": "standard"
+    }
+  ]
 }
 ```
 
@@ -380,43 +380,42 @@ Example `GetNextTracks` response:
 
 ```json5
 {
-    "eventName": "Response",
-    "status": "ok",
-    "requestName": "GetNextTracks",
-    "payload": {
-        "tracks": [
+  "eventName": "Response",
+  "status": "ok",
+  "requestName": "GetNextTracks",
+  "payload": {
+    "tracks": [
+      {
+        "type": "track",
+        "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
+        "name": "SongName",
+        "mediaType": "audio",
+        "duration": 225000,
+        "album": {
+          "uri": "spotify:album:albumId",
+          "name": "AlbumName",
+          "images": [
             {
-                "type": "track",
-                "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
-                "name": "SongName",
-                "mediaType": "audio",
-                "duration": 225000,
-                "album": {
-                    "uri": "spotify:album:albumId",
-                    "name": "AlbumName",
-                    "images": [
-                        {
-                            "url": "https://...",
-                             "label": "standard"
-                        }
-                    ]
-                },
-                "artists": [
-                    {
-                        "uri": "spotify:artist:artistId",
-                        "name": "ArtistName"
-                    }
-                ],
-
-                "images": [
-                        {
-                            "url": "https://...",
-                             "label": "standard"
-                        }
-                    ]
+              "url": "https://...",
+              "label": "standard"
             }
+          ]
+        },
+        "artists": [
+          {
+            "uri": "spotify:artist:artistId",
+            "name": "ArtistName"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://...",
+            "label": "standard"
+          }
         ]
-    }
+      }
+    ]
+  }
 }
 ```
 
