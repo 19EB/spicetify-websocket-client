@@ -17,7 +17,7 @@ Let your websocket control the Spotify application:
 - play, pause or toggle play
 - mute/unmute
 - volume control
-- play specific track by URl or URL
+- play specific track by URI or URL
 - skip forward, skip back or seek within a track
 - set or toggle repeat
 - set or toggle shuffle
@@ -36,10 +36,23 @@ Furthermore, your websocket server will receive a song change notification whene
 > [!NOTE]
 > Using this installation method, you will **not** receive automatic updates.
 
-1. Download [`spicetify-websocket-client.js`] ()
+1. Download [`spicetify-websocket-client.js`](https://github.com/19EB/spicetify-websocket-client/blob/main/spicetify-websocket-client.js).
+
+2. Place the file in the path:
+   - Windows: `C:\Users\<user_name>\AppData\Roaming\spicetify\Extensions\`
+   - Linux / macOS: `~/.config/spicetify/Extensions/`
+
+3. Enable the extension:
+```bash
+spicetify config extensions .js
+```
+
+4. Enable the extension:
+```bash
+spicetify apply
+```
 
 
-TODO: Add user installation guide
 
 If the extension was installed successfully, a websocket icon should appear at the bottom right
 
