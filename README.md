@@ -22,10 +22,22 @@ Let your websocket control the Spotify application:
 - set or toggle repeat
 - set or toggle shuffle
 - add or remove a track to or from a queue
+- fetch current track, queued tracks and more
 
 Furthermore, your websocket server will receive a song change notification whenever a new track is being played in the Spotify app.
 
 ## Installation
+
+> [!IMPORTANT]
+> [Spotify](https://www.spotify.com/) with [Spicetify](https://spicetify.app/) is required.
+
+### Manual Installation
+
+> [!NOTE]
+> Using this installation method, you will **not** receive automatic updates.
+
+1. Download [`spicetify-websocket-client.js`] ()
+
 
 TODO: Add user installation guide
 
