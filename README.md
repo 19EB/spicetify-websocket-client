@@ -428,7 +428,7 @@ This project was initially created to be used with a custom websocket server in 
 2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
    the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup).
 
-3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/StreamerbotSpotifyActions)
+3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions)
 
 4. Click `Import` and drag the downloaded file onto the the import interface.
 
