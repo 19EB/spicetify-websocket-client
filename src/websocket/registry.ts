@@ -36,8 +36,13 @@ import { GetRepeatAction } from "./incoming/get-repeat";
 import { GetShuffleAction } from "./incoming/get-shuffle";
 import { GetHeartAction } from "./incoming/get-heart";
 import { GetVolumeAction } from "./incoming/get-volume";
+import { GetPlayerStateAction } from "./incoming/get-player-state";
+import { GetCurrentTrackAction } from "./incoming/get-current-track";
+import { GetNextTracksAction } from "./incoming/get-next-tracks";
+import { GetPreviousTracksAction } from "./incoming/get-previous-tracks";
 
 import { WebsocketClient } from "./client";
+
 
 
 
@@ -89,6 +94,10 @@ const eventHandlers: WebsocketAction[] = [
     GetShuffleAction,
     GetHeartAction,
     GetVolumeAction,
+    GetPlayerStateAction,
+    GetCurrentTrackAction,
+    GetNextTracksAction,
+    GetPreviousTracksAction
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(

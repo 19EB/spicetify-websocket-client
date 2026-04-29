@@ -36,7 +36,12 @@ export enum WEBSOCKET_EVENT_TYPES {
     GET_REPEAT = "GetRepeat",
     GET_SHUFFLE = "GetShuffle",
     GET_HEART = "GetHeart",
-    GET_VOLUME = "GetVolume"
+    GET_VOLUME = "GetVolume",
+
+    GET_PLAYER_STATE = "GetPlayerState",
+    GET_CURRENT_TRACK = "GetCurrentTrack",
+    GET_NEXT_TRACKS = "GetNextTracks",
+    GET_PREVIOUS_TRACK = "GetPreviousTrack",
 }
 
 type CommonWebsocketMessage = {
@@ -81,6 +86,10 @@ type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.GET_SHUFFLE]: {};
     [WEBSOCKET_EVENT_TYPES.GET_HEART]: {};
     [WEBSOCKET_EVENT_TYPES.GET_VOLUME]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_PLAYER_STATE] : {};
+    [WEBSOCKET_EVENT_TYPES.GET_CURRENT_TRACK] : {};
+    [WEBSOCKET_EVENT_TYPES.GET_NEXT_TRACKS] : {};
+    [WEBSOCKET_EVENT_TYPES.GET_PREVIOUS_TRACK] : {};
 }
 
 export type WebsocketMessageGuard<K extends WEBSOCKET_EVENT_TYPES> = {

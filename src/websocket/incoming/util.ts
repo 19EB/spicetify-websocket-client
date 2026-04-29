@@ -51,8 +51,7 @@ function convertSpicetifyImagesEntities(
 
 
 export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack) {
-    if(!spicetifyPlayerTrack) return undefined;
-    
+  
     const playerTrack: PlayerTrack = {
         type: spicetifyPlayerTrack.type,
         uri: spicetifyPlayerTrack.uri,
