@@ -1,4 +1,4 @@
-# Incoming Event Handlers
+# Incoming Request Handlers
 
 This folder contains websocket event handlers for messages received from the server.
 
@@ -10,7 +10,7 @@ Current handlers:
 - `previous-song.ts`
 - `set-volume.ts`
 
-## How Incoming Events Work
+## How Incoming Requests Work
 
 The shared event names and payload types live in `types.ts`.
 
@@ -50,7 +50,7 @@ If your event needs data, add the payload shape to `WebsocketMessageMap`.
 Example:
 
 ```ts
-[WEBSOCKET_EVENT_TYPES.SEEK]: { positionMs: number };
+[WEBSOCKET_EVENT_TYPES.SEEK]: { position: number };
 ```
 
 ### 2. Create a handler file
@@ -60,26 +60,39 @@ Create a new file in this folder.
 Example: `toggle-play.ts`
 
 ```ts
-import { WEBSOCKET_EVENT_TYPES, WebsocketAction } from "./types";
+import { WebsocketClient } from "../client";
+import { WebsocketResponse } from "../outgoing/types";
+import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 
 function togglePlay() {
     Spicetify.Player.togglePlay();
 }
 
-export const TogglePlayAction: WebsocketAction = {
-    eventName: WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY,
-    execute: togglePlay,
-};
-```
+function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY>) {
 
-If the event has a payload, use `message.payload` inside `execute`.
+    const requestId = websocketMessage.requestId;
+    const callback = websocketMessage.callback;
 
-Example:
+    if (callback == undefined || callback === true) {
+        const response : WebsocketResponse<null> = {
+            eventName: "Response",
+            status: "ok",
+            requestName: WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY,
+            requestId: requestId
+        };
 
-```ts
-export const SeekAction: WebsocketAction = {
-    eventName: WEBSOCKET_EVENT_TYPES.SEEK,
-    execute: (message) => Spicetify.Player.seek(message.payload.positionMs),
+        websocketClient.sendWebsocketMessage(response);
+    }
+}
+
+function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY>) {
+    togglePlay();
+    respond(websocketClient, websocketMessage);
+}
+
+export const TogglePlayAction : WebsocketAction = {
+    requestName: WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY,
+    execute: (message, websocketClient) => handleRequest(websocketClient, message)
 };
 ```
 
@@ -119,7 +132,7 @@ Example with payload:
 {
   "eventName": "SetVolume",
   "payload": {
-    "volume": 50
+    "level": 50
   }
 }
 ```
