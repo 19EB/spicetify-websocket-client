@@ -424,7 +424,7 @@ Example `GetNextTracks` response:
 
 This project was initially created to be used with a custom websocket server in [Streamer.bot](https://streamer.bot/)
 
-_TODO_ Collection of streamerbot C# scripts that can be used, along with handling the handshake
+_To be released:_ A ready-to-use Streamerbot setup for Twitch chat commands and channelpoint redemptions using this extension
 
 ## Development
 
