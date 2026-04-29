@@ -8,8 +8,7 @@ type SetVolumePayload = {
 }
 
 function setVolume(level: number) {
-    const asFloat = level / 100;
-    const clamped = Math.max(0, Math.min(asFloat, 1));
+    const clamped = Math.max(0, Math.min(level, 1));
     Spicetify.Player.setVolume(clamped);
 }
 

@@ -31,6 +31,12 @@ export enum WEBSOCKET_EVENT_TYPES {
 
     GET_DURATION = "GetDuration",
     GET_MUTE = "GetMute",
+    GET_PROGRESS = "GetProgress",
+    GET_PROGRESS_PERCENT = "GetProgressPercent",
+    GET_REPEAT = "GetRepeat",
+    GET_SHUFFLE = "GetShuffle",
+    GET_HEART = "GetHeart",
+    GET_VOLUME = "GetVolume"
 }
 
 type CommonWebsocketMessage = {
@@ -39,26 +45,26 @@ type CommonWebsocketMessage = {
 }
 
 type WebsocketMessageMap = {
-    [WEBSOCKET_EVENT_TYPES.PLAY]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.PLAY_URI]: { uri: string }; //done
-    [WEBSOCKET_EVENT_TYPES.PLAY_URL]: { url: string }; //done
-    [WEBSOCKET_EVENT_TYPES.PAUSE]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.NEXT_SONG]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.BACK]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.PREVIOUS_SONG]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.SKIP_FORWARD]: { amount: number }; //done
-    [WEBSOCKET_EVENT_TYPES.SKIP_BACK]: { amount: number }; //done
-    [WEBSOCKET_EVENT_TYPES.SEEK]: { position: number }; //done
-    [WEBSOCKET_EVENT_TYPES.SET_SHUFFLE]: { state: boolean }; //done
-    [WEBSOCKET_EVENT_TYPES.TOGGLE_SHUFFLE]: {}; //done
+    [WEBSOCKET_EVENT_TYPES.PLAY]: {};
+    [WEBSOCKET_EVENT_TYPES.PLAY_URI]: { uri: string };
+    [WEBSOCKET_EVENT_TYPES.PLAY_URL]: { url: string };
+    [WEBSOCKET_EVENT_TYPES.PAUSE]: {};
+    [WEBSOCKET_EVENT_TYPES.TOGGLE_PLAY]: {};
+    [WEBSOCKET_EVENT_TYPES.NEXT_SONG]: {};
+    [WEBSOCKET_EVENT_TYPES.BACK]: {};
+    [WEBSOCKET_EVENT_TYPES.PREVIOUS_SONG]: {};
+    [WEBSOCKET_EVENT_TYPES.SKIP_FORWARD]: { amount: number };
+    [WEBSOCKET_EVENT_TYPES.SKIP_BACK]: { amount: number };
+    [WEBSOCKET_EVENT_TYPES.SEEK]: { position: number };
+    [WEBSOCKET_EVENT_TYPES.SET_SHUFFLE]: { state: boolean };
+    [WEBSOCKET_EVENT_TYPES.TOGGLE_SHUFFLE]: {};
     [WEBSOCKET_EVENT_TYPES.SET_REPEAT]: { mode: 0 | 1 | 2 };
     [WEBSOCKET_EVENT_TYPES.TOGGLE_REPEAT]: {};
-    [WEBSOCKET_EVENT_TYPES.SET_VOLUME]: { level: number }; //done
-    [WEBSOCKET_EVENT_TYPES.DECREASE_VOLUME]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.INCREASE_VOLUME]: {}; //done
-    [WEBSOCKET_EVENT_TYPES.SET_MUTE]: { state: boolean }; //done
-    [WEBSOCKET_EVENT_TYPES.TOGGLE_MUTE]: {}; //done
+    [WEBSOCKET_EVENT_TYPES.SET_VOLUME]: { level: number };
+    [WEBSOCKET_EVENT_TYPES.DECREASE_VOLUME]: {};
+    [WEBSOCKET_EVENT_TYPES.INCREASE_VOLUME]: {};
+    [WEBSOCKET_EVENT_TYPES.SET_MUTE]: { state: boolean };
+    [WEBSOCKET_EVENT_TYPES.TOGGLE_MUTE]: {};
     [WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_URI]: { uri: string };
     [WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_URL]: { url: string };
     [WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URI]: { uri: string };
@@ -69,6 +75,12 @@ type WebsocketMessageMap = {
 
     [WEBSOCKET_EVENT_TYPES.GET_DURATION]: {};
     [WEBSOCKET_EVENT_TYPES.GET_MUTE]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_PROGRESS]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_PROGRESS_PERCENT]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_REPEAT]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_SHUFFLE]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_HEART]: {};
+    [WEBSOCKET_EVENT_TYPES.GET_VOLUME]: {};
 }
 
 export type WebsocketMessageGuard<K extends WEBSOCKET_EVENT_TYPES> = {

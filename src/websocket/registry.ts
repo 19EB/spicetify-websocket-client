@@ -29,6 +29,13 @@ import { SetHeartAction } from "./incoming/set-heart";
 import { ToggleHeartAction } from "./incoming/toggle-heart";
 
 import { GetDurationAction } from "./incoming/get-duration";
+import { GetMuteAction } from "./incoming/get-mute";
+import { GetProgressAction } from "./incoming/get-progress";
+import { GetProgressPercentAction } from "./incoming/get-progress-percent";
+import { GetRepeatAction } from "./incoming/get-repeat";
+import { GetShuffleAction } from "./incoming/get-shuffle";
+import { GetHeartAction } from "./incoming/get-heart";
+import { GetVolumeAction } from "./incoming/get-volume";
 
 import { WebsocketClient } from "./client";
 
@@ -75,6 +82,13 @@ const eventHandlers: WebsocketAction[] = [
     ToggleHeartAction,
 
     GetDurationAction,
+    GetMuteAction,
+    GetProgressAction,
+    GetProgressPercentAction,
+    GetRepeatAction,
+    GetShuffleAction,
+    GetHeartAction,
+    GetVolumeAction,
 ]
 
 export const isActionForMessage = <T extends WebsocketMessage>(
