@@ -7,7 +7,7 @@
         "readme" : "README.md",
         "authors" : [
             { "name": "Seb", "url": "https://github.com/19EB" }, 
-            { "name": "Darockk", "url": "https://github.com/DarockObama" }
+            { "name": "Darock", "url": "https://github.com/DarockObama" }
         ],
         "tags": ["websocket", "client", "server", "API", "Streamerbot"]
     }
