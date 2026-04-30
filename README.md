@@ -33,9 +33,6 @@ Furthermore, your websocket server will receive a song change notification whene
 
 ### Manual Installation
 
-> [!NOTE]
-> Using this installation method, you will **not** receive automatic updates.
-
 1. Download [`spicetify-websocket-client.js`](https://github.com/19EB/spicetify-websocket-client/blob/main/spicetify-websocket-client.js).
 
 2. Place the file in the path:
@@ -47,7 +44,7 @@ Furthermore, your websocket server will receive a song change notification whene
 spicetify config extensions .js
 ```
 
-4. Enable the extension:
+1. Enable the extension:
 ```bash
 spicetify apply
 ```
