@@ -1,0 +1,14 @@
+[
+    {
+        "name" : "Websocket Client",
+        "description" : "Control your Spotify player and fetch info from the player through your application, using a websocket connection.",
+        "preview" : "resources/preview.png",
+        "main" : "spicetify-websocket-client.js",
+        "readme" : "README.md",
+        "authors" : [
+            { "name": "Seb", "url": "https://github.com/19EB" }, 
+            { "name": "Darockk", "url": "https://github.com/DarockObama" }
+        ],
+        "tags": ["websocket", "client", "server", "API", "Streamerbot"]
+    }
+]

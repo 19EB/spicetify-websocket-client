@@ -58,7 +58,47 @@ If the extension was installed successfully, a websocket icon should appear at t
 
 ![Image of spotify play bar with websocket button](resources/image-2.png)
 
+## Integrating with Streamer.bot
 
+This project was initially created to be used with a custom websocket server in [Streamer.bot](https://streamer.bot/). We have included a simple ready-to-use Streamerbot setup that lets you control your Spotify, request songs and fetch the currently playing song through Twitch chat.
+
+1. Download and install the Streamerbot application, using the [Installation Guide](https://docs.streamer.bot/get-started/installation).
+
+2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
+   the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup).
+
+3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions)
+
+4. Click `Import` and drag the downloaded file onto the the import interface.
+
+![Screenshot of import](resources/image-3.png)
+
+5. Go to `Commands` and enable all commands that came with the import.
+
+![Commands](resources/image-5.png)
+
+6. Go to `Servers/Cliesnts` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`.
+   
+![Server](resources/image-4.png)
+
+7. If you'd like to set up song requests through Twitch Channel Rewards, go to `Platforms` > `Twitch` > `Channel Point Rewards` and add the channel point reward with 'User input required' enabled. This reward will queue a spotify track belonging to the provided song link. Make sure to clarify this in the description. Choose your desired cost and cooldown. Navigate to `Actions & Queues` > `Actions` and select the action `Song Request Redeem` and make sure the **Triggers** box contains the Twitch Channel Reward you just made. Inside the **Triggers** box, right-click and select  `Add` > `Twitch` > `Channel Reward` > `Reward Redemption`, which will let you pick the reward you just made.
+
+![Trigger](resources/image-7.png)
+
+8. Open your Spotify with Spicetify and this extension installed and you're good to go. If the connection icon in Spotify indicates no connection, simply click the icon to open the interface and manually reconnect.
+
+The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
+
+## Development
+
+### Prerequisites
+
+Before building this extension, make sure you have:
+
+- [Node.js](https://nodejs.org/) and `npm`
+- the Spotify desktop client
+- [Spicetify CLI](https://github.com/spicetify/cli) installed and working
+- a valid Spicetify setup that has already been applied to Spotify at least once
 
 ## Websocket behavior
 
@@ -418,48 +458,6 @@ Example `GetNextTracks` response:
   }
 }
 ```
-
-## Integrating with Streamer.bot
-
-This project was initially created to be used with a custom websocket server in [Streamer.bot](https://streamer.bot/). We have included a simple ready-to-use Streamerbot setup that lets you control your Spotify, request songs and fetch the currently playing song through Twitch chat.
-
-1. Download and install the Streamerbot application, using the [Installation Guide](https://docs.streamer.bot/get-started/installation).
-
-2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
-   the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup).
-
-3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions)
-
-4. Click `Import` and drag the downloaded file onto the the import interface.
-
-![Screenshot of import](resources/image-3.png)
-
-5. Go to `Commands` and enable all commands that came with the import.
-
-![Commands](resources/image-5.png)
-
-6. Go to `Servers/Cliesnts` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`.
-   
-![Server](resources/image-4.png)
-
-7. If you'd like to set up song requests through Twitch Channel Rewards, go to `Platforms` > `Twitch` > `Channel Point Rewards` and add the channel point reward with 'User input required' enabled. This reward will queue a spotify track belonging to the provided song link. Make sure to clarify this in the description. Choose your desired cost and cooldown. Navigate to `Actions & Queues` > `Actions` and select the action `Song Request Redeem` and make sure the **Triggers** box contains the Twitch Channel Reward you just made. Inside the **Triggers** box, right-click and select  `Add` > `Twitch` > `Channel Reward` > `Reward Redemption`, which will let you pick the reward you just made.
-
-![Trigger](resources/image-7.png)
-
-8. Open your Spotify with Spicetify and this extension installed and you're good to go. If the connection icon in Spotify indicates no connection, simply click the icon to open the interface and manually reconnect.
-
-The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
-
-## Development
-
-### Prerequisites
-
-Before building this extension, make sure you have:
-
-- [Node.js](https://nodejs.org/) and `npm`
-- the Spotify desktop client
-- [Spicetify CLI](https://github.com/spicetify/cli) installed and working
-- a valid Spicetify setup that has already been applied to Spotify at least once
 
 ### Build
 
