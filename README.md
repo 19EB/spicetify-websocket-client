@@ -89,18 +89,9 @@ This project was initially created to be used with a custom websocket server in 
 
 The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
 
-## Development
 
-### Prerequisites
 
-Before building this extension, make sure you have:
-
-- [Node.js](https://nodejs.org/) and `npm`
-- the Spotify desktop client
-- [Spicetify CLI](https://github.com/spicetify/cli) installed and working
-- a valid Spicetify setup that has already been applied to Spotify at least once
-
-## Websocket behavior
+## Websocket setup and API
 
 ### Websocket settings
 
@@ -458,6 +449,17 @@ Example `GetNextTracks` response:
   }
 }
 ```
+
+## Development
+
+### Prerequisites
+
+Before building this extension, make sure you have:
+
+- [Node.js](https://nodejs.org/) and `npm`
+- the Spotify desktop client
+- [Spicetify CLI](https://github.com/spicetify/cli) installed and working
+- a valid Spicetify setup that has already been applied to Spotify at least once
 
 ### Build
 
