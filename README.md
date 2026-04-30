@@ -91,7 +91,7 @@ The imported actions in Streamerbot intuitively do what their name suggests. Mos
 
 
 
-## Websocket setup and API
+## Websocket settings and API
 
 ### Websocket settings
 
