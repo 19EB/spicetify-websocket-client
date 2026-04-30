@@ -41,7 +41,7 @@ Furthermore, your websocket server will receive a song change notification whene
 
 3. Enable the extension:
 ```bash
-spicetify config extensions .js
+spicetify config extensions spicetify-websocket-client.js
 ```
 
 1. Enable the extension:
