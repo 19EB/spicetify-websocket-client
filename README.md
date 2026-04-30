@@ -66,7 +66,7 @@ This project was initially created to be used with a custom websocket server in 
 
 3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions)
 
-4. Click `Import` and drag the downloaded file onto the the import interface.
+4. Click `Import` and drag the downloaded file onto the import interface.
 
 ![Screenshot of import](resources/image-3.png)
 
@@ -74,7 +74,7 @@ This project was initially created to be used with a custom websocket server in 
 
 ![Commands](resources/image-5.png)
 
-6. Go to `Servers/Cliesnts` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`.
+6. Go to `Servers/Clients` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`.
    
 ![Server](resources/image-4.png)
 
@@ -84,7 +84,7 @@ This project was initially created to be used with a custom websocket server in 
 
 8. Open your Spotify with Spicetify and this extension installed and you're good to go. If the connection icon in Spotify indicates no connection, simply click the icon to open the interface and manually reconnect.
 
-The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
+The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
 
 
 
