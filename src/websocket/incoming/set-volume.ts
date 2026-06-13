@@ -18,7 +18,7 @@ function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMe
     if (callback == undefined || callback == true) {
         const level = websocketMessage.payload.level;
         const requestId = websocketMessage.requestId;
-        const validPayload = isNumber(websocketMessage.payload);
+        const validPayload = isNumber(level);
 
         const response: WebsocketResponse<SetVolumePayload> = {
             eventName: "Response",
