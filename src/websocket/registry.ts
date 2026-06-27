@@ -44,8 +44,7 @@ import { GetNextTracksAction } from "./incoming/get-next-tracks";
 import { GetPreviousTracksAction } from "./incoming/get-previous-track";
 import { WebsocketClient } from "./client";
 import { registerPlayPauseChangeListener } from "./outgoing/play-pause-changed";
-import { registerVolumeChangeListener } from "./outgoing/volume-changed";
-
+import { registerVolumeChangeListener } from "./outgoing/volume-change";
 
 let listenersRegistered = false;
 
@@ -54,7 +53,6 @@ export const registerListeners = (websocketClient: WebsocketClient) => {
         return;
     }
 
-    registerVolumeChangeListener(websocketClient);
     registerPlayPauseChangeListener(websocketClient);
     registerSongChangeListener(websocketClient);
     registerQueueChangeListener(websocketClient);
