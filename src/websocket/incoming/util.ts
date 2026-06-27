@@ -85,6 +85,10 @@ export function toPlayerTrackArray(spicetifyPlayerTracks: Spicetify.PlayerTrack[
 }
 
 export function getPlayerState(): PlayerState {
+
+    const previousTrack = Spicetify.Player.data.previousItems?.[0] ?? null;
+    const nextTracks = Spicetify.Player.data.nextItems ?? null;
+
     const playerState: PlayerState = {
         isPlaying: Spicetify.Player.isPlaying(),
         progress: Spicetify.Player.getProgress(),
@@ -94,12 +98,8 @@ export function getPlayerState(): PlayerState {
         isShuffling: Spicetify.Player.getShuffle(),
         repeatMode: Spicetify.Player.getRepeat(),
         currentTrack: toPlayerTrack(Spicetify.Player.data.item),
-        previousTrack: Spicetify.Player.data.previousItems
-            ? toPlayerTrack(Spicetify.Player.data.previousItems[0])
-            : undefined,
-        nextTracks: Spicetify.Player.data.nextItems
-            ? toPlayerTrackArray(Spicetify.Player.data.nextItems)
-            : undefined,
+        previousTrack: previousTrack ? toPlayerTrack(previousTrack) : undefined,
+        nextTracks: nextTracks ? toPlayerTrackArray(nextTracks) : undefined,
     };
 
     return playerState;
