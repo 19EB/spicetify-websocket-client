@@ -1,5 +1,6 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage } from "./incoming/types";
 import { registerSongChangeListener } from "./outgoing/song-change";
+import { registerVolumeChangeListener } from "./outgoing/volume-change";
 import { PlayAction } from "./incoming/play";
 import { PlayUriAction } from "./incoming/play-uri";
 import { PlayUrlAction } from "./incoming/play-url";
@@ -54,6 +55,7 @@ export const registerListeners = (websocketClient: WebsocketClient) => {
     }
 
     registerSongChangeListener(websocketClient);
+    registerVolumeChangeListener(websocketClient);
     listenersRegistered = true;
 }
 

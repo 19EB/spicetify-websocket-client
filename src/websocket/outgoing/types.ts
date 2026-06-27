@@ -1,5 +1,6 @@
 export enum WEBSOCKET_OUTGOING_EVENT_TYPE {
     SONG_CHANGED = "SongChanged",
+    VOLUME_CHANGED = "VolumeChanged",
     RESPONSE = "Response",
 }
 
