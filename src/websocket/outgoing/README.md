@@ -7,6 +7,7 @@ Each file in this folder listens to a Spotify event, builds a websocket payload,
 Current handlers:
 
 - `song-change.ts`
+- `volume-change.ts` (polls `Spicetify.Player.getVolume()` via `observeValue`, since Spotify exposes no volume event)
 
 ## How Outgoing Events Work
 
