@@ -1,9 +1,9 @@
 import { WebsocketClient } from "../client";
+import { observeValue } from "../../observers/observe-value";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
-import { observeValue } from "../../observe-value";
 
 type VolumeChangedPayload = {
-    level: number;
+  level: number;
 };
 
 const sendVolume = (websocketClient: WebsocketClient, level: number) => {
@@ -18,6 +18,7 @@ export const registerVolumeChangeListener = (websocketClient: WebsocketClient) =
   observeValue<number>({
     read: () => Spicetify.Player.getVolume(),
     emitInitial: true,
+    debounceMs: 600,
     onChange: (level) => sendVolume(websocketClient, level),
   });
 };
