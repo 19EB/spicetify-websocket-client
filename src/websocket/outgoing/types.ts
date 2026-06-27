@@ -1,7 +1,10 @@
 export enum WEBSOCKET_OUTGOING_EVENT_TYPE {
+    INITIAL_STATE = "InitialState",
     SONG_CHANGED = "SongChanged",
+    QUEUE_CHANGED = "QueueChanged",
+    PLAY_PAUSE_CHANGED = "PlayPauseChanged",
     VOLUME_CHANGED = "VolumeChanged",
-    RESPONSE = "Response",
+    RESPONSE = "Response"
 }
 
 export type WebsocketEvent<T> = {
@@ -38,4 +41,17 @@ export type PlayerTrack = {
         url: string;
         label: string;
     } [];
+}
+
+export type PlayerState = {
+    isPlaying: boolean;
+    progress: number;
+    duration: number;
+    isMuted: boolean;
+    volume: number;
+    isShuffling: boolean;
+    repeatMode: number;
+    currentTrack: PlayerTrack;
+    previousTrack?: PlayerTrack;
+    nextTracks?: PlayerTrack[];
 }

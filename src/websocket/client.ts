@@ -3,6 +3,7 @@ import { registerEvents, registerListeners } from "./registry";
 import { WebsocketConnectionStatus } from "./types";
 import { WebsocketEvent } from "./outgoing/types";
 import PubSub from "pubsub-js";
+import { sendInitialPlayerState } from "./outgoing/initial-state";
 
 type WebsocketConfig = {
     address: string;
@@ -93,6 +94,8 @@ export class WebsocketClient {
             if (client.readyState === client.OPEN) {
                 Spicetify.showNotification("Websocket connection established");
                 setConnectionStatus(WebsocketConnectionStatus.CONNECTED);
+                // Send initial player data
+                sendInitialPlayerState(websocketClient);
                 // Register event listeners for outgoing events
                 registerListeners(websocketClient);
                 // Set up event handlers for incoming messages
