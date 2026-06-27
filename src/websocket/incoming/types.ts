@@ -29,6 +29,7 @@ export enum WEBSOCKET_EVENT_TYPES {
     SET_HEART = "SetHeart",
     TOGGLE_HEART = "ToggleHeart",
 
+    GET_PLAY_PAUSE = "GetPlayPause",
     GET_DURATION = "GetDuration",
     GET_MUTE = "GetMute",
     GET_PROGRESS = "GetProgress",
@@ -78,6 +79,7 @@ type WebsocketMessageMap = {
     [WEBSOCKET_EVENT_TYPES.SET_HEART]: { status: boolean };
     [WEBSOCKET_EVENT_TYPES.TOGGLE_HEART]: {};
 
+    [WEBSOCKET_EVENT_TYPES.GET_PLAY_PAUSE]: {};
     [WEBSOCKET_EVENT_TYPES.GET_DURATION]: {};
     [WEBSOCKET_EVENT_TYPES.GET_MUTE]: {};
     [WEBSOCKET_EVENT_TYPES.GET_PROGRESS]: {};

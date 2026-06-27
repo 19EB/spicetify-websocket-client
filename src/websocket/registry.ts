@@ -1,5 +1,8 @@
-import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage } from "./incoming/types";
+import { WebsocketAction, WebsocketMessage } from "./incoming/types";
 import { registerSongChangeListener } from "./outgoing/song-change";
+import { registerQueueChangeListener } from "./outgoing/queue-change";
+
+
 import { PlayAction } from "./incoming/play";
 import { PlayUriAction } from "./incoming/play-uri";
 import { PlayUrlAction } from "./incoming/play-url";
@@ -28,6 +31,7 @@ import { ClearQueueAction } from "./incoming/clear-queue";
 import { SetHeartAction } from "./incoming/set-heart";
 import { ToggleHeartAction } from "./incoming/toggle-heart";
 
+import { GetPlayPauseAction } from "./incoming/get-play-pause";
 import { GetDurationAction } from "./incoming/get-duration";
 import { GetMuteAction } from "./incoming/get-mute";
 import { GetProgressAction } from "./incoming/get-progress";
@@ -39,11 +43,10 @@ import { GetVolumeAction } from "./incoming/get-volume";
 import { GetPlayerStateAction } from "./incoming/get-player-state";
 import { GetCurrentTrackAction } from "./incoming/get-current-track";
 import { GetNextTracksAction } from "./incoming/get-next-tracks";
-import { GetPreviousTracksAction } from "./incoming/get-previous-tracks";
-
+import { GetPreviousTracksAction } from "./incoming/get-previous-track";
 import { WebsocketClient } from "./client";
-
-
+import { registerPlayPauseChangeListener } from "./outgoing/play-pause-changed";
+import { registerVolumeChangeListener } from "./outgoing/volume-changed";
 
 
 let listenersRegistered = false;
@@ -53,7 +56,10 @@ export const registerListeners = (websocketClient: WebsocketClient) => {
         return;
     }
 
+    registerVolumeChangeListener(websocketClient);
+    registerPlayPauseChangeListener(websocketClient);
     registerSongChangeListener(websocketClient);
+    registerQueueChangeListener(websocketClient);
     listenersRegistered = true;
 }
 
@@ -86,6 +92,7 @@ const eventHandlers: WebsocketAction[] = [
     SetHeartAction,
     ToggleHeartAction,
 
+    GetPlayPauseAction,
     GetDurationAction,
     GetMuteAction,
     GetProgressAction,

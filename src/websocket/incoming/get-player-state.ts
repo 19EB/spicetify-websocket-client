@@ -1,11 +1,14 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { PlayerState } from "../outgoing/types";
+import { getPlayerState } from "./util";
+
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.GET_PLAYER_STATE>) {
-    const playerState = Spicetify.Player.data;
+    const playerState = getPlayerState();
     
-    const response : WebsocketResponse<Spicetify.PlayerState> = {
+    const response : WebsocketResponse<PlayerState> = {
         eventName: "Response",
         status: playerState ? "ok" : "error",
         requestName: WEBSOCKET_EVENT_TYPES.GET_PLAYER_STATE,

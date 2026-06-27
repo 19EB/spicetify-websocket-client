@@ -1,5 +1,7 @@
 import { PlayerTrack } from "../outgoing/types";
 import { ContextTrack } from "./types";
+import { PlayerState } from "../outgoing/types";
+
 
 export function spotifyUrlToUri(input: string) {
     const match = input.match(
@@ -49,8 +51,7 @@ function convertSpicetifyImagesEntities(
     return images;
 }
 
-
-export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack) {
+export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack) : PlayerTrack {
   
     const playerTrack: PlayerTrack = {
         type: spicetifyPlayerTrack.type,
@@ -70,6 +71,40 @@ export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack) {
 
     return playerTrack;
 }
+
+export function toPlayerTrackArray(spicetifyPlayerTracks: Spicetify.PlayerTrack[] | undefined) : PlayerTrack[] {
+    const playerTracks : PlayerTrack[] = [];
+
+    if(spicetifyPlayerTracks) {
+        for(let i = 0; i < spicetifyPlayerTracks.length ; i++) {
+            playerTracks[i] = toPlayerTrack(spicetifyPlayerTracks[i]);
+        }
+    }
+
+    return playerTracks;    
+}
+
+export function getPlayerState(): PlayerState {
+    const playerState: PlayerState = {
+        isPlaying: Spicetify.Player.isPlaying(),
+        progress: Spicetify.Player.getProgress(),
+        duration: Spicetify.Player.getDuration(),
+        isMuted: Spicetify.Player.getMute(),
+        volume: Spicetify.Player.getVolume(),
+        isShuffling: Spicetify.Player.getShuffle(),
+        repeatMode: Spicetify.Player.getRepeat(),
+        currentTrack: toPlayerTrack(Spicetify.Player.data.item),
+        previousTrack: Spicetify.Player.data.previousItems
+            ? toPlayerTrack(Spicetify.Player.data.previousItems[0])
+            : undefined,
+        nextTracks: Spicetify.Player.data.nextItems
+            ? toPlayerTrackArray(Spicetify.Player.data.nextItems)
+            : undefined,
+    };
+
+    return playerState;
+}
+
 
 export function safeParseUri(uri: string | null): Spicetify.URI | null {
     if (uri == null) return null;
