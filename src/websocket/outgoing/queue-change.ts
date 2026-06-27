@@ -1,7 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
 import { PlayerTrack } from "./types";
-import { toPlayerTrack } from "../incoming/util";
+import { toPlayerTrack } from "../util";
 
 const handleQueueChange = (websocketClient: WebsocketClient) => {
 

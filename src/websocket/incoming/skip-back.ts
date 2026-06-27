@@ -1,7 +1,7 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
-import { isNumber } from "./util";
+import { isNumber } from "../util";
 
 type SkipBackPayload = {
     amount?: number;

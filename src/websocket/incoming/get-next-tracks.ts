@@ -2,7 +2,7 @@ import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { PlayerTrack } from "../outgoing/types";
-import { toPlayerTrackArray } from "./util";
+import { toPlayerTrackArray } from "../util";
 
 type GetNextTracksPayload = {
     tracks : PlayerTrack[];

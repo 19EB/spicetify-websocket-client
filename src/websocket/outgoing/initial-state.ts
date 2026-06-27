@@ -1,7 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
 import { PlayerState   } from "./types";
-import { getPlayerState } from "../incoming/util";
+import { getPlayerState } from "../util";
 
 const sendMessage = (websocketClient: WebsocketClient) => {
 

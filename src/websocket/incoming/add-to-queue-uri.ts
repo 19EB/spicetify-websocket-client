@@ -1,7 +1,7 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage, WebsocketMessageGuard } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
-import { safeParseUri } from "./util";
+import { safeParseUri } from "../util";
 
 type AddToQueueUriPayload = {
     uri?: string;

@@ -2,7 +2,7 @@ import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { PlayerState } from "../outgoing/types";
-import { getPlayerState } from "./util";
+import { getPlayerState } from "../util";
 
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.GET_PLAYER_STATE>) {

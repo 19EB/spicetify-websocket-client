@@ -1,8 +1,8 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
-import { spotifyUrlToUri } from "./util";
+import { spotifyUrlToUri } from "../util";
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
-import { safeParseUri } from "./util";
+import { safeParseUri } from "../util";
 
 
 type PlayUrlPayload = {

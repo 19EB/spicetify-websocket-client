@@ -1,6 +1,6 @@
-import { PlayerTrack } from "../outgoing/types";
-import { ContextTrack } from "./types";
-import { PlayerState } from "../outgoing/types";
+import { PlayerTrack } from "./outgoing/types";
+import { ContextTrack } from "./incoming/types";
+import { PlayerState } from "./outgoing/types";
 
 
 export function spotifyUrlToUri(input: string) {
