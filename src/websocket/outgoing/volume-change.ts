@@ -18,6 +18,7 @@ export const registerVolumeChangeListener = (websocketClient: WebsocketClient) =
   observeValue<number>({
     read: () => Spicetify.Player.getVolume(),
     emitInitial: true,
+    debounceMs: 600,
     onChange: (level) => sendVolume(websocketClient, level),
   });
 };
