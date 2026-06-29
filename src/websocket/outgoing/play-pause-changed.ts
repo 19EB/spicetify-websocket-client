@@ -20,4 +20,5 @@ const handlePlayPauseChange = (websocketClient: WebsocketClient) => {
 
 export const registerPlayPauseChangeListener = (websocketClient: WebsocketClient) => {
     Spicetify.Player.addEventListener("onplaypause", () => handlePlayPauseChange(websocketClient));
+
 };

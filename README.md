@@ -31,6 +31,12 @@ Furthermore, your websocket server will receive a song change notification whene
 > [!IMPORTANT]
 > [Spotify](https://www.spotify.com/) with [Spicetify](https://spicetify.app/) is required.
 
+### Installing from the Spicetify Marketplace
+
+1. Navigate to the Spicetify Marketplace by clicking the basket in the top-left corner of your Spotify window.
+2. Search for 'spicetify-websocket-client' and click 'Load more'.
+3. Download the extension.
+
 ### Manual Installation
 
 1. Download [`spicetify-websocket-client.js`](https://github.com/19EB/spicetify-websocket-client/blob/main/spicetify-websocket-client.js).
@@ -50,10 +56,15 @@ spicetify apply
 ```
 
 
-
 If the extension was installed successfully, a websocket icon should appear at the bottom right
 
 ![Image of spotify play bar with websocket button](resources/image-2.png)
+
+## Fixing Spicetify after Spotify's update
+Run the following command:
+```bash
+spicetify backup apply
+```
 
 ## Integrating with Streamer.bot
 
@@ -141,13 +152,197 @@ Most responses use this structure:
 
 If an unknown `requestName` is received, the extension sends an error response. If the incoming message cannot be parsed or another error is thrown while handling it, the extension sends a generic error response.
 
+### Shape of PlayerTrack and PlayerState
+
+`PlayerTrack` payload shape:
+
+```json5
+{
+  "type": "track",
+  "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
+  "name": "SongName",
+  "mediaType": "audio",
+  "duration": 225000,
+  "album": {
+    "uri": "spotify:album:albumId",
+    "name": "AlbumName",
+    "images": [
+      {
+        "url": "https://...",
+        "label": "standard"
+      }
+    ]
+  },
+  "artists": [
+    {
+      "uri": "spotify:artist:artistId",
+      "name": "ArtistName"
+    }
+  ],
+  "images": [
+    {
+      "url": "https://...",
+      "label": "standard"
+    }
+  ]
+}
+```
+
+Payload fields:
+
+- `type`: The Spicetify track type.
+- `uri`: The Spotify URI of the track.
+- `name`: The track name.
+- `mediaType`: The media type reported by Spicetify.
+- `duration`: Track duration in milliseconds.
+- `album`: Album information.
+- `album.uri`: Spotify URI of the album.
+- `album.name`: Album name.
+- `album.images`: Optional album image list.
+- `artists`: Optional artist list.
+- `images`: Optional track image list.
+
+`PlayerState` payload shape:
+
+```json5
+{
+  "isPlaying": true,
+  "progress": 84231,
+  "duration": 215447,
+  "isMuted": false,
+  "volume": 0.78,
+  "isShuffling": true,
+  "repeatMode": 1,
+  "currentTrack": {
+    "type": "track",
+    "uri": "spotify:track:3n3Ppam7vgaVa1iaRUc9Lp",
+    "name": "Mr. Brightside",
+    "mediaType": "audio",
+    "duration": 215447,
+    "album": {
+      "uri": "spotify:album:4piJq7R3gjUOxnYs6lDCTg",
+      "name": "Hot Fuss",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e024d0dc3f5e1b46d0f1d7cbcc1",
+          "label": "640x640"
+        }
+      ]
+    },
+    "artists": [
+      {
+        "uri": "spotify:artist:0C0XlULifJtAgn6ZNCW2eu",
+        "name": "The Killers"
+      }
+    ],
+    "images": [
+      {
+        "url": "https://i.scdn.co/image/ab67616d00001e024d0dc3f5e1b46d0f1d7cbcc1",
+        "label": "640x640"
+      }
+    ]
+  },
+  "previousTrack": {
+    "type": "track",
+    "uri": "spotify:track:0eGsygTp906u18L0Oimnem",
+    "name": "Lose Yourself",
+    "mediaType": "audio",
+    "duration": 326466,
+    "album": {
+      "uri": "spotify:album:6t7956yu5zYf5A829XRiHC",
+      "name": "8 Mile",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e02f0b3f7d2f7f9d1f0c8b1a3ef",
+          "label": "640x640"
+        }
+      ]
+    },
+    "artists": [
+      {
+        "uri": "spotify:artist:7dGJo4pcD2V6oG8kP0tJRR",
+        "name": "Eminem"
+      }
+    ],
+    "images": [
+      {
+        "url": "https://i.scdn.co/image/ab67616d00001e02f0b3f7d2f7f9d1f0c8b1a3ef",
+        "label": "640x640"
+      }
+    ]
+  },
+  "nextTracks": [
+    {
+      "type": "track",
+      "uri": "spotify:track:7ouMYWpwJ422jRcDASZB7P",
+      "name": "Take Me Out",
+      "mediaType": "audio",
+      "duration": 237026,
+      "album": {
+        "uri": "spotify:album:0vi5ePiEHrGZJF7QhnDW2z",
+        "name": "Franz Ferdinand",
+        "images": [
+          {
+            "url": "https://i.scdn.co/image/ab67616d00001e02d3f3c8360e3b9a2b805d6e7c",
+            "label": "640x640"
+          }
+        ]
+      },
+      "artists": [
+        {
+          "uri": "spotify:artist:0XNa1vTidXlvJ2gHSsRi4A",
+          "name": "Franz Ferdinand"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e02d3f3c8360e3b9a2b805d6e7c",
+          "label": "640x640"
+        }
+      ]
+    }
+  ]
+}
+```
+Payload fields:
+
+- `isPlaying`: The Play/Pause state, `true` if playing and `false` if paused.
+- `progress`: The progress of the current song in milliseconds.
+- `duration`: The duration of the current song in milliseconds.
+- `isMuted`: The mute state of the player, `true` if muted and false otherwise.
+- `volume`: A number between 0 and 1 indicating the volume level of the player.
+- `isShuffling`: Indicating the shuffle state of the player, `true` if either regular or smart shuffle is enabled and `false` otherwise.
+- `repeatMode`: A number indicating the repeat mode of the palyer. `0` for no repeat, `1` for repeat all and `2` for repeat one.
+- `currentTrack`: A `PlayerTrack` object corresponding to the currently playing track.
+- `previousTrack`: A `PlayerTrack` object corresponding to the peviously played track.
+- `nextTracks`: A `PlayerTrack[]` object array corresponding to tracks in queue.
+
+
 ### Outgoing events
 
 #### `SongChanged`
 
-The extension sends a `SongChanged` event when Spicetify emits a `songchange` player event. It also tries to send an initial `SongChanged` event after the websocket listeners are registered, so the server receives the currently playing track without waiting for the next song change.
+The extension sends a `SongChanged` event when a new track plays in Spotify. The payload will be a `PlayerTrack` object corresponding to the new track that's playing.
 
-The old `SongChanged` payload containing `title`, `artist`, and `song` has been replaced with a normalized `PlayerTrack` payload.
+#### `InitialState`
+
+Whenever a connection with a websocket server is established, the extension sends an `InitialState` event, including a `PlayerState` object as the payload.
+
+#### `QueueChanged`
+
+Whenever the queue of upcoming tracks is updated in Spotify, the extension sends a `QueueChanged` event, including a `PlayerTrack[]` object array as the payload.
+
+#### `PlayPauseChanged`
+
+Whenever the Play/Pause state of the player changes, a `PlayPauseChanged` event is sent with the payload containing a variable named `isPlaying`, with value `true` or `false`.
+
+#### `VolumeChanged`
+
+Whneever the volume level of the player changes, a `VolumeChanged` event is sent with the payload containing a variable named `level`, with a number value between `0` and `1`.
+
+#### JSON examples
+
+`SongChanged`:
 
 ```json5
 {
@@ -184,21 +379,27 @@ The old `SongChanged` payload containing `title`, `artist`, and `song` has been 
 }
 ```
 
-Payload fields:
+`PlayPauseChanged`:
 
-- `type`: The Spicetify track type.
-- `uri`: The Spotify URI of the track.
-- `name`: The track name.
-- `mediaType`: The media type reported by Spicetify.
-- `duration`: Track duration in milliseconds.
-- `album`: Album information.
-- `album.uri`: Spotify URI of the album.
-- `album.name`: Album name.
-- `album.images`: Optional album image list.
-- `artists`: Optional artist list.
-- `images`: Optional track image list.
+```json5
+{
+  "eventName": "PlayPauseChanged",
+  "payload": {
+    "isPlaying": True
+  }
+}
+```
 
-If no current track data is available, no `SongChanged` message is sent.
+`VolumeChanged`: 
+
+```json5
+{
+  "eventName": "VolumeChanged",
+  "payload": {
+    "level": 0.73
+  }
+}
+```
 
 ### Incoming requests
 
@@ -336,6 +537,7 @@ Example:
 
 | Request | Response payload | Behavior |
 | --- | --- | --- |
+| `GetPlayPause` | `{ "isPlaying" : true }` | Calls `Spicetify.Player.isPlaying()`, which returns the play state.
 | `GetDuration` | `{ "duration": 225000 }` | Calls `Spicetify.Player.getDuration()`, which returns the current track duration in milliseconds. |
 | `GetMute` | `{ "state": false }` | Calls `Spicetify.Player.getMute()`, which returns the mute state. |
 | `GetProgress` | `{ "progress": 60000 }` | Calls `Spicetify.Player.getProgress()`, which returns the current track progress in milliseconds. |
@@ -365,44 +567,11 @@ These requests read from `Spicetify.Player.data`.
 
 | Request | Response payload | Behavior |
 | --- | --- | --- |
-| `GetPlayerState` | Full `Spicetify.PlayerState` object | Sends `Spicetify.Player.data` as the response payload. If no player state is available, the response status is `error` and the message is `No playerstate available`. |
+| `GetPlayerState` | Full `PlayerState` object | Sends a `PlayerState` object as the response payload. If no player state is available, the response status is `error` and the message is `No playerstate available`. |
 | `GetCurrentTrack` | `PlayerTrack` | Converts `Spicetify.Player.data.item` to the same normalized `PlayerTrack` shape used by `SongChanged`. |
 | `GetNextTracks` | `{ "tracks": PlayerTrack[] }` | Converts each item in `Spicetify.Player.data.nextItems` to the normalized `PlayerTrack` shape. If no next-track data is available, the response status is `error` and the message is `No next tracks data available`. |
 | `GetPreviousTrack` | `PlayerTrack` | Converts the first item in `Spicetify.Player.data.previousItems` to the normalized `PlayerTrack` shape. If no previous-track data is available, the response status is `error` and the message is `No previous track data available`. |
 
-`PlayerTrack` response shape:
-
-```json5
-{
-  "type": "track",
-  "uri": "spotify:track:5cP52DlDN9yryuZVQDg3iq",
-  "name": "SongName",
-  "mediaType": "audio",
-  "duration": 225000,
-  "album": {
-    "uri": "spotify:album:albumId",
-    "name": "AlbumName",
-    "images": [
-      {
-        "url": "https://...",
-        "label": "standard"
-      }
-    ]
-  },
-  "artists": [
-    {
-      "uri": "spotify:artist:artistId",
-      "name": "ArtistName"
-    }
-  ],
-  "images": [
-    {
-      "url": "https://...",
-      "label": "standard"
-    }
-  ]
-}
-```
 
 Example `GetNextTracks` response:
 

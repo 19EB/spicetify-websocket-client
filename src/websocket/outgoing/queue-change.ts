@@ -26,5 +26,4 @@ const handleQueueChange = (websocketClient: WebsocketClient) => {
 
 export const registerQueueChangeListener = (websocketClient: WebsocketClient) => {
     Spicetify.Platform.PlayerAPI._events.addListener("queue_update", () => handleQueueChange(websocketClient));
-  //  sendInitialQueue(websocketClient);
 }
