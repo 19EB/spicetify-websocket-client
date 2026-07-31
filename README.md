@@ -75,7 +75,7 @@ This project was initially created to be used with a custom websocket server in 
 2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
    the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup).
 
-3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions)
+3. Download [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions).
 
 4. Click `Import` and drag the downloaded file onto the import interface.
 
@@ -338,7 +338,7 @@ Whenever the Play/Pause state of the player changes, a `PlayPauseChanged` event 
 
 #### `VolumeChanged`
 
-Whneever the volume level of the player changes, a `VolumeChanged` event is sent with the payload containing a variable named `level`, with a number value between `0` and `1`.
+Whenever the volume level of the player changes, a `VolumeChanged` event is sent with the payload containing a variable named `level`, with a number value between `0` and `1`.
 
 #### JSON examples
 
