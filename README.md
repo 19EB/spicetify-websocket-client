@@ -98,6 +98,7 @@ This project was initially created to be used with a custom websocket server in 
 ![alt text](resources/image-8.png)
 ![alt text](resources/image-9.png)
 ![alt text](resources/image-10.png)
+
 **Note**: For future use, always make sure to let Streamerbot load up for a while to ensure it has initialized before opening Spotify to ensure it's able to receive initial data. You can also simply disconnect and reconnect Spotify to ensure proper initialization.
 
 
