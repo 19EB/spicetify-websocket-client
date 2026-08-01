@@ -45,12 +45,12 @@ Furthermore, your websocket server will receive a song change notification whene
    - Windows: `C:\Users\<user_name>\AppData\Roaming\spicetify\Extensions\`
    - Linux / macOS: `~/.config/spicetify/Extensions/`
 
-3. Enable the extension:
+3. Open Terminal and run the following commmand to enable the extension:
 ```bash
 spicetify config extensions spicetify-websocket-client.js
 ```
 
-4. Apply the change:
+4. Run the following command to apply the change:
 ```bash
 spicetify apply
 ```
