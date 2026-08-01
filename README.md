@@ -72,8 +72,8 @@ This project was initially created to be used with a custom websocket server in 
 
 1. Download and install the Streamerbot application, using the [Installation Guide](https://docs.streamer.bot/get-started/installation).
 
-2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
-   the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup). Optionally, you can log in on a secondary Twitch account to let it function as your chat bot.
+2. Connect your Streamerbot to your broadcasting software and Twitch account, using
+   the [Initial Setup Guide](https://docs.streamer.bot/get-started/setup). Optionally, you can log in on a secondary Twitch account to let it function as your chat bot.
 
 3. Copy the raw file of [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions).
 
@@ -85,15 +85,21 @@ This project was initially created to be used with a custom websocket server in 
 
 ![Commands](resources/image-5.png)
 
-6. Go to `Servers/Clients` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`.
+6. Go to `Servers/Clients` > `Custom WebSocket Servers`, right-click `Spicetify Websocket` > `Start` and make sure to enable ✅ `Auto Start`. **Important**: If you happen to have another custom websocket server already setup, make sure to assign a unique endpoint, such as 'Spicetify'.
    
-![Server](resources/image-4.png)
+![alt text](resources/image-4.1.png) ![alt text](resources/image-4.2.png)
 
 7. If you'd like to set up song requests through Twitch Channel Rewards, go to `Platforms` > `Twitch` > `Channel Point Rewards` and add the channel point reward with 'User input required' enabled. This reward will queue a spotify track belonging to the provided song link. Make sure to clarify this in the description. Choose your desired cost and cooldown. Navigate to `Actions & Queues` > `Actions` and select the action `Song Request Redeem` and make sure the **Triggers** box contains the Twitch Channel Reward you just made. Inside the **Triggers** box, right-click and select  `Add` > `Twitch` > `Channel Reward` > `Reward Redemption`, which will let you pick the reward you just made.
 
 ![Trigger](resources/image-7.png)
 
-8. Open your Spotify with Spicetify and this extension installed and you're good to go. If the connection icon in Spotify indicates no connection, simply click the icon to open the interface and manually reconnect.
+8. Open your Spotify with Spicetify and this extension. Click the websocket icon in the bottom and go to **Settings**. Enable 'Startup on launch' and make sure the `Adress`, `Port` and `Endpoint` match those of your Streamerbot's custom websocket server. You should now be able to let Spotify connect to the websocket server whenever Streamerbot is running and Spotify will try to autoconnect to the server on next startup.
+
+![alt text](resources/image-8.png)
+![alt text](resources/image-9.png)
+![alt text](resources/image-10.png)
+**Note**: For future use, always make sure to let Streamerbot load up for a while to ensure it has initialized before opening Spotify to ensure it's able to receive initial data. You can also simply disconnect and reconnect Spotify to ensure proper initialization.
+
 
 The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable or alter `Process event`, `Handshake`, `Spicetify event signal`, `Spicetify response signal`, `Spicetify response signal var` or `Spotify Controls`. These are all part of core processes that make the bot function.
 
