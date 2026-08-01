@@ -102,7 +102,9 @@ This project was initially created to be used with a custom websocket server in 
 **Note**: For future use, always make sure to let Streamerbot load up for a while to ensure it has initialized before opening Spotify to ensure it's able to receive initial data. You can also simply disconnect and reconnect Spotify to ensure proper initialization.
 
 
-The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable or alter `Process event`, `Handshake`, `Spicetify event signal`, `Spicetify response signal`, `Spicetify response signal var` or `Spotify Controls`. These are all part of core processes that make the bot function.
+The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. By default, chat commands that control your spotify in any way have been restricted to only you and your Twitch moderators.
+
+Do **NOT** disable or alter `Process event`, `Handshake`, `Spicetify event signal`, `Spicetify response signal`, `Spicetify response signal var` or `Spotify Controls`. These are all part of core processes that make the bot function.
 
 ## Websocket settings and API
 
