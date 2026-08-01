@@ -73,11 +73,11 @@ This project was initially created to be used with a custom websocket server in 
 1. Download and install the Streamerbot application, using the [Installation Guide](https://docs.streamer.bot/get-started/installation).
 
 2. Connect your Streamerbot to your broadcasting software and streaming platform(s) of choice, using
-   the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup).
+   the [**Initial Setup Guide**](https://docs.streamer.bot/get-started/setup). Optionally, you can log in on a secondary Twitch account to let it function as your chat bot.
 
-3. Download [StreamerbotSpotifyActions](https://downgit.github.io/#/home?url=https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions).
+3. Copy the raw file of [StreamerbotSpotifyActions](https://github.com/19EB/spicetify-websocket-client/blob/main/resources/StreamerbotSpotifyActions).
 
-4. Click `Import` and drag the downloaded file onto the import interface.
+4. Click `Import` and paste the raw file in the dialog box.
 
 ![Screenshot of import](resources/image-3.png)
 
@@ -95,9 +95,7 @@ This project was initially created to be used with a custom websocket server in 
 
 8. Open your Spotify with Spicetify and this extension installed and you're good to go. If the connection icon in Spotify indicates no connection, simply click the icon to open the interface and manually reconnect.
 
-The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable `Process event` and `Handshake`. The former keeps the current song updated and the latter is essential for maintaining websocket connection.
-
-
+The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. Do **NOT** disable or alter `Process event`, `Handshake`, `Spicetify event signal`, `Spicetify response signal`, `Spicetify response signal var` or `Spotify Controls`. These are all part of core processes that make the bot function.
 
 ## Websocket settings and API
 
