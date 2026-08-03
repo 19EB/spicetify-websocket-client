@@ -28,16 +28,27 @@ Furthermore, your websocket server will receive a song change notification whene
 
 ## Installation
 
-> [!IMPORTANT]
-> [Spotify](https://www.spotify.com/) with [Spicetify](https://spicetify.app/) is required.
+### Installing Spicetify
 
-### Installing from the Spicetify Marketplace
+> [!IMPORTANT]
+> An installation of Spotify directly from their website is required. If your current Spotify installation is from the Microsoft Store, uninstall it and reinstall directly from [Spotify](https://www.spotify.com/download) by clicking <ins>Download directly from Spotify</ins>.
+
+To install [Spicetify](https://spicetify.app/) on top of your Spotify,  open Terminal and run the following commmand.
+
+For Windows:
+```iwr -useb https://raw.githubusercontent.com/spicetify/cli/main/install.ps1 | iex```
+
+For macOS / Linux:
+```curl -fsSL https://raw.githubusercontent.com/spicetify/cli/main/install.sh | sh```
+
+
+### Installing our extension from Spicetify Marketplace
 
 1. Navigate to the Spicetify Marketplace by clicking the basket in the top-left corner of your Spotify window.
 2. Search for 'spicetify-websocket-client' and click 'Load more'.
 3. Download the extension.
 
-### Manual Installation
+### Installing our extension manually
 
 1. Download [`spicetify-websocket-client.js`](https://github.com/19EB/spicetify-websocket-client/blob/main/spicetify-websocket-client.js).
 
@@ -61,7 +72,7 @@ If the extension was installed successfully, a websocket icon should appear at t
 ![Image of spotify play bar with websocket button](resources/image-2.png)
 
 ## Fixing Spicetify after Spotify's update
-Run the following command:
+Run the following command in Terminal.
 ```bash
 spicetify backup apply
 ```
@@ -414,21 +425,21 @@ Whenever the volume level of the player changes, a `VolumeChanged` event is sent
 
 These requests do not require payload data.
 
-| Request | Payload | Behavior |
-| --- | --- | --- |
-| `Play` | `{}` | Calls `Spicetify.Player.play()`, which resumes playback. |
-| `Pause` | `{}` | Calls `Spicetify.Player.pause()`, which pauses playback. |
-| `TogglePlay` | `{}` | Calls `Spicetify.Player.togglePlay()`, which toggles between play and pause. |
-| `NextSong` | `{}` | Calls `Spicetify.Player.next()`, which skips to the next track. |
-| `Back` | `{}` | Calls `Spicetify.Player.back()`, which skips to the previous track. |
-| `PreviousSong` | `{}` | Calls `Spicetify.Player.skipBack(99999999)` and then `Spicetify.Player.back()`. This first seeks backward by a very large amount and then triggers the previous-track behavior. |
-| `DecreaseVolume` | `{}` | Calls `Spicetify.Player.decreaseVolume()`, which decreases the volume by a client-determined amount. |
-| `IncreaseVolume` | `{}` | Calls `Spicetify.Player.increaseVolume()`, which increases the volume by a client-determined amount. |
-| `ToggleShuffle` | `{}` | Calls `Spicetify.Player.toggleShuffle()`, which toggles shuffle. |
-| `ToggleRepeat` | `{}` | Calls `Spicetify.Player.toggleRepeat()`, which cycles repeat mode between no repeat, repeat all, and repeat one. |
-| `ToggleMute` | `{}` | Calls `Spicetify.Player.toggleMute()`, which toggles mute. |
-| `ToggleHeart` | `{}` | Calls `Spicetify.Player.toggleHeart()`, which saves or unsaves the current track. |
-| `ClearQueue` | `{}` | Calls `Spicetify.Platform.PlayerAPI.clearQueue()`, which clears the current queue. |
+| Request          | Payload | Behavior                                                                                                                                                                        |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Play`           | `{}`    | Calls `Spicetify.Player.play()`, which resumes playback.                                                                                                                        |
+| `Pause`          | `{}`    | Calls `Spicetify.Player.pause()`, which pauses playback.                                                                                                                        |
+| `TogglePlay`     | `{}`    | Calls `Spicetify.Player.togglePlay()`, which toggles between play and pause.                                                                                                    |
+| `NextSong`       | `{}`    | Calls `Spicetify.Player.next()`, which skips to the next track.                                                                                                                 |
+| `Back`           | `{}`    | Calls `Spicetify.Player.back()`, which skips to the previous track.                                                                                                             |
+| `PreviousSong`   | `{}`    | Calls `Spicetify.Player.skipBack(99999999)` and then `Spicetify.Player.back()`. This first seeks backward by a very large amount and then triggers the previous-track behavior. |
+| `DecreaseVolume` | `{}`    | Calls `Spicetify.Player.decreaseVolume()`, which decreases the volume by a client-determined amount.                                                                            |
+| `IncreaseVolume` | `{}`    | Calls `Spicetify.Player.increaseVolume()`, which increases the volume by a client-determined amount.                                                                            |
+| `ToggleShuffle`  | `{}`    | Calls `Spicetify.Player.toggleShuffle()`, which toggles shuffle.                                                                                                                |
+| `ToggleRepeat`   | `{}`    | Calls `Spicetify.Player.toggleRepeat()`, which cycles repeat mode between no repeat, repeat all, and repeat one.                                                                |
+| `ToggleMute`     | `{}`    | Calls `Spicetify.Player.toggleMute()`, which toggles mute.                                                                                                                      |
+| `ToggleHeart`    | `{}`    | Calls `Spicetify.Player.toggleHeart()`, which saves or unsaves the current track.                                                                                               |
+| `ClearQueue`     | `{}`    | Calls `Spicetify.Platform.PlayerAPI.clearQueue()`, which clears the current queue.                                                                                              |
 
 Example:
 
@@ -444,14 +455,14 @@ Example:
 
 These requests only accept Spotify track URIs or Spotify track URLs. Album, playlist, artist, and other URI/URL types are rejected.
 
-| Request | Payload | Behavior |
-| --- | --- | --- |
-| `PlayUri` | `{ "uri": "spotify:track:<id>" }` | Validates that `uri` is a Spotify track URI, then calls `Spicetify.Player.playUri(uri)`, which starts playback of the specified track. |
-| `PlayUrl` | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.Player.playUri(uri)`. |
-| `AddToQueueUri` | `{ "uri": "spotify:track:<id>" }` | Validates that `uri` is a Spotify track URI, then calls `Spicetify.addToQueue([{ uri }])`. |
-| `AddToQueueUrl` | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.addToQueue([{ uri }])`. |
-| `RemoveFromQueueUri` | `{ "uri": "spotify:track:<id>" }` | Validates that `uri` is a Spotify track URI, then calls `Spicetify.removeFromQueue([{ uri }])`. |
-| `RemoveFromQueueUrl` | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.removeFromQueue([{ uri }])`. |
+| Request              | Payload                                            | Behavior                                                                                                                               |
+| -------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `PlayUri`            | `{ "uri": "spotify:track:<id>" }`                  | Validates that `uri` is a Spotify track URI, then calls `Spicetify.Player.playUri(uri)`, which starts playback of the specified track. |
+| `PlayUrl`            | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.Player.playUri(uri)`.                       |
+| `AddToQueueUri`      | `{ "uri": "spotify:track:<id>" }`                  | Validates that `uri` is a Spotify track URI, then calls `Spicetify.addToQueue([{ uri }])`.                                             |
+| `AddToQueueUrl`      | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.addToQueue([{ uri }])`.                     |
+| `RemoveFromQueueUri` | `{ "uri": "spotify:track:<id>" }`                  | Validates that `uri` is a Spotify track URI, then calls `Spicetify.removeFromQueue([{ uri }])`.                                        |
+| `RemoveFromQueueUrl` | `{ "url": "https://open.spotify.com/track/<id>" }` | Converts the Spotify track URL to a Spotify track URI, validates it, then calls `Spicetify.removeFromQueue([{ uri }])`.                |
 
 Example:
 
@@ -479,16 +490,16 @@ Example:
 
 #### Player state setters and seeking
 
-| Request | Payload | Behavior |
-| --- | --- | --- |
-| `SetShuffle` | `{ "state": true }` | Calls `Spicetify.Player.setShuffle(state)`, which sets shuffle to the provided boolean. |
-| `SetMute` | `{ "state": true }` | Calls `Spicetify.Player.setMute(state)`, which sets mute to the provided boolean. |
-| `SetHeart` | `{ "status": true }` | Calls `Spicetify.Player.setHeart(status)`, which sets the heart/save state of the current track. |
-| `SetRepeat` | `{ "mode": 0 }` | Calls `Spicetify.Player.setRepeat(mode)`. Valid repeat modes are `0` for no repeat, `1` for repeat all, and `2` for repeat one. |
-| `SetVolume` | `{ "level": 0.5 }` | Calls `Spicetify.Player.setVolume(level)`. `level` is expected to be a number between `0` and `1`. The handler clamps the value before sending it to Spicetify, so values below `0` become `0` and values above `1` become `1`. |
-| `Seek` | `{ "position": 60000 }` | Calls `Spicetify.Player.seek(position)`. Spicetify accepts either a percentage from `0` to `1` or a position in milliseconds. |
-| `SkipForward` | `{ "amount": 15000 }` | Calls `Spicetify.Player.skipForward(amount)`, which skips forward by the specified number of milliseconds. |
-| `SkipBack` | `{ "amount": 15000 }` | Calls `Spicetify.Player.skipBack(amount)`, which skips backward by the specified number of milliseconds. |
+| Request       | Payload                 | Behavior                                                                                                                                                                                                                        |
+| ------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SetShuffle`  | `{ "state": true }`     | Calls `Spicetify.Player.setShuffle(state)`, which sets shuffle to the provided boolean.                                                                                                                                         |
+| `SetMute`     | `{ "state": true }`     | Calls `Spicetify.Player.setMute(state)`, which sets mute to the provided boolean.                                                                                                                                               |
+| `SetHeart`    | `{ "status": true }`    | Calls `Spicetify.Player.setHeart(status)`, which sets the heart/save state of the current track.                                                                                                                                |
+| `SetRepeat`   | `{ "mode": 0 }`         | Calls `Spicetify.Player.setRepeat(mode)`. Valid repeat modes are `0` for no repeat, `1` for repeat all, and `2` for repeat one.                                                                                                 |
+| `SetVolume`   | `{ "level": 0.5 }`      | Calls `Spicetify.Player.setVolume(level)`. `level` is expected to be a number between `0` and `1`. The handler clamps the value before sending it to Spicetify, so values below `0` become `0` and values above `1` become `1`. |
+| `Seek`        | `{ "position": 60000 }` | Calls `Spicetify.Player.seek(position)`. Spicetify accepts either a percentage from `0` to `1` or a position in milliseconds.                                                                                                   |
+| `SkipForward` | `{ "amount": 15000 }`   | Calls `Spicetify.Player.skipForward(amount)`, which skips forward by the specified number of milliseconds.                                                                                                                      |
+| `SkipBack`    | `{ "amount": 15000 }`   | Calls `Spicetify.Player.skipBack(amount)`, which skips backward by the specified number of milliseconds.                                                                                                                        |
 
 Example `SetVolume` request:
 
@@ -542,17 +553,17 @@ Example:
 
 #### Simple player GET requests
 
-| Request | Response payload | Behavior |
-| --- | --- | --- |
-| `GetPlayPause` | `{ "isPlaying" : true }` | Calls `Spicetify.Player.isPlaying()`, which returns the play state.
-| `GetDuration` | `{ "duration": 225000 }` | Calls `Spicetify.Player.getDuration()`, which returns the current track duration in milliseconds. |
-| `GetMute` | `{ "state": false }` | Calls `Spicetify.Player.getMute()`, which returns the mute state. |
-| `GetProgress` | `{ "progress": 60000 }` | Calls `Spicetify.Player.getProgress()`, which returns the current track progress in milliseconds. |
-| `GetProgressPercent` | `{ "progressPercent": 0.5 }` | Calls `Spicetify.Player.getProgressPercent()`, which returns progress as a number from `0` to `1`. |
-| `GetRepeat` | `{ "mode": 0 }` | Calls `Spicetify.Player.getRepeat()`, which returns `0` for no repeat, `1` for repeat all, or `2` for repeat one. |
-| `GetShuffle` | `{ "state": true }` | Calls `Spicetify.Player.getShuffle()`, which returns the shuffle state. |
-| `GetHeart` | `{ "status": true }` | Calls `Spicetify.Player.getHeart()`, which returns whether the current track is saved/hearted. |
-| `GetVolume` | `{ "level": 0.5 }` | Calls `Spicetify.Player.getVolume()`, which returns the current volume as a number from `0` to `1`. |
+| Request              | Response payload             | Behavior                                                                                                          |
+| -------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `GetPlayPause`       | `{ "isPlaying" : true }`     | Calls `Spicetify.Player.isPlaying()`, which returns the play state.                                               |
+| `GetDuration`        | `{ "duration": 225000 }`     | Calls `Spicetify.Player.getDuration()`, which returns the current track duration in milliseconds.                 |
+| `GetMute`            | `{ "state": false }`         | Calls `Spicetify.Player.getMute()`, which returns the mute state.                                                 |
+| `GetProgress`        | `{ "progress": 60000 }`      | Calls `Spicetify.Player.getProgress()`, which returns the current track progress in milliseconds.                 |
+| `GetProgressPercent` | `{ "progressPercent": 0.5 }` | Calls `Spicetify.Player.getProgressPercent()`, which returns progress as a number from `0` to `1`.                |
+| `GetRepeat`          | `{ "mode": 0 }`              | Calls `Spicetify.Player.getRepeat()`, which returns `0` for no repeat, `1` for repeat all, or `2` for repeat one. |
+| `GetShuffle`         | `{ "state": true }`          | Calls `Spicetify.Player.getShuffle()`, which returns the shuffle state.                                           |
+| `GetHeart`           | `{ "status": true }`         | Calls `Spicetify.Player.getHeart()`, which returns whether the current track is saved/hearted.                    |
+| `GetVolume`          | `{ "level": 0.5 }`           | Calls `Spicetify.Player.getVolume()`, which returns the current volume as a number from `0` to `1`.               |
 
 Example `GetVolume` response:
 
@@ -572,12 +583,12 @@ Example `GetVolume` response:
 
 These requests read from `Spicetify.Player.data`.
 
-| Request | Response payload | Behavior |
-| --- | --- | --- |
-| `GetPlayerState` | Full `PlayerState` object | Sends a `PlayerState` object as the response payload. If no player state is available, the response status is `error` and the message is `No playerstate available`. |
-| `GetCurrentTrack` | `PlayerTrack` | Converts `Spicetify.Player.data.item` to the same normalized `PlayerTrack` shape used by `SongChanged`. |
-| `GetNextTracks` | `{ "tracks": PlayerTrack[] }` | Converts each item in `Spicetify.Player.data.nextItems` to the normalized `PlayerTrack` shape. If no next-track data is available, the response status is `error` and the message is `No next tracks data available`. |
-| `GetPreviousTrack` | `PlayerTrack` | Converts the first item in `Spicetify.Player.data.previousItems` to the normalized `PlayerTrack` shape. If no previous-track data is available, the response status is `error` and the message is `No previous track data available`. |
+| Request            | Response payload              | Behavior                                                                                                                                                                                                                              |
+| ------------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GetPlayerState`   | Full `PlayerState` object     | Sends a `PlayerState` object as the response payload. If no player state is available, the response status is `error` and the message is `No playerstate available`.                                                                  |
+| `GetCurrentTrack`  | `PlayerTrack`                 | Converts `Spicetify.Player.data.item` to the same normalized `PlayerTrack` shape used by `SongChanged`.                                                                                                                               |
+| `GetNextTracks`    | `{ "tracks": PlayerTrack[] }` | Converts each item in `Spicetify.Player.data.nextItems` to the normalized `PlayerTrack` shape. If no next-track data is available, the response status is `error` and the message is `No next tracks data available`.                 |
+| `GetPreviousTrack` | `PlayerTrack`                 | Converts the first item in `Spicetify.Player.data.previousItems` to the normalized `PlayerTrack` shape. If no previous-track data is available, the response status is `error` and the message is `No previous track data available`. |
 
 
 Example `GetNextTracks` response:
