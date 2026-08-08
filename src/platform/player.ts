@@ -1,7 +1,7 @@
 // Drop-in replacement for Spicetify.Player, built on services resolved from Spotify's
 // own registry. Behaviour mirrors Spicetify's wrapper so existing handlers keep working,
-// except that mute uses Spotify's MuteHelper service (Spicetify clicks a DOM node, which
-// cannot work headless) and getVolume reads getVolumeInternal() (the _volume field
+// except that setMute uses Spotify's MuteHelper service (Spicetify clicks a DOM node,
+// which cannot work headless) and getVolume reads getVolumeInternal() (the _volume field
 // Spicetify reads is legacy, and getVolume() is async on current clients).
 
 import { getService } from "./registry";
@@ -158,12 +158,10 @@ export const Player = {
     void playbackApi().lowerVolume();
   },
 
+  // A zero level counts as muted however it was set, matching Spicetify. Note this can
+  // disagree with the MuteHelper's own flag if the level was dragged to zero by hand.
   getMute(): boolean {
-    try {
-      return playbackApi().getMuteHelper().isMuted();
-    } catch {
-      return Player.getVolume() === 0; // pre-MuteHelper clients
-    }
+    return Player.getVolume() === 0;
   },
 
   setMute(muted: boolean): void {
@@ -171,7 +169,7 @@ export const Player = {
   },
 
   toggleMute(): void {
-    void playbackApi().getMuteHelper().toggleMute();
+    Player.setMute(!Player.getMute());
   },
 
   getMuteHelper(): MuteHelper {

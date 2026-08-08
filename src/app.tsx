@@ -15,13 +15,24 @@ async function main() {
 
   setNotifier((message, isError) => Spicetify.showNotification(message, isError));
 
-  // Resolve Spotify's service registry before any handler runs
-  await bootstrapPlatform();
+  // Resolve Spotify's service registry before any handler runs. Every handler depends
+  // on it, so if it cannot be found we skip the websocket client but still load the
+  // settings and the button, rather than failing the whole extension.
+  let platformReady = false;
+  try {
+    await bootstrapPlatform();
+    platformReady = true;
+  } catch (error) {
+    console.error("Websocket client: could not reach Spotify's platform APIs.", error);
+    Spicetify.showNotification("Websocket client could not start, see the console", true);
+  }
 
   await addSettings();
 
-  const websocketClient = new WebsocketClient();
-  globalThis.websocketClient = websocketClient;
+  if (platformReady) {
+    const websocketClient = new WebsocketClient();
+    globalThis.websocketClient = websocketClient;
+  }
 
   const extraControls = await asyncElement<HTMLElement>(".main-nowPlayingBar-extraControls");
   if (extraControls) {
