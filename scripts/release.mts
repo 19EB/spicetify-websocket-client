@@ -11,6 +11,7 @@ import {
   chmodSync,
   copyFileSync,
   createReadStream,
+  readFileSync,
   existsSync,
   mkdirSync,
   readdirSync,
@@ -19,18 +20,14 @@ import {
   writeFileSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { join } from "node:path";
+import { delimiter, dirname, join } from "node:path";
 import { readmeText, startCmd, startSh } from "./dist-files.mts";
 
 const BUILD_DIR = "dist-standalone";
 const OUT_DIR = "release";
 const STAGE_DIR = join(OUT_DIR, ".stage");
 
-const version = process.argv[2] ?? `v${JSON.parse(
-  execFileSync(process.execPath, ["-e", "process.stdout.write(require('fs').readFileSync('package.json','utf8'))"], {
-    encoding: "utf8",
-  }),
-).version}`;
+const version = process.argv[2] ?? `v${JSON.parse(readFileSync("package.json", "utf8")).version}`;
 
 interface Target {
   name: string;
@@ -89,9 +86,40 @@ const makeZip = (stage: string, out: string) => {
   execFileSync("zip", ["-r", "-q", out, "."], { cwd: stage, stdio: "inherit" });
 };
 
-const makeTarGz = (stage: string, out: string) => {
-  execFileSync(
+// We need GNU tar: --mode is the only way to get an execute bit into the archive from
+// Windows, and Windows' own tar.exe is bsdtar, which rejects that option. Git for
+// Windows bundles GNU tar, so it is available whenever this repo is cloned.
+const findGnuTar = (): string => {
+  const candidates = [
+    process.env.TAR,
+    "C:\\Program Files\\Git\\usr\\bin\\tar.exe",
+    "/usr/bin/tar",
     "tar",
+  ].filter(Boolean) as string[];
+
+  const seen: string[] = [];
+  for (const candidate of candidates) {
+    let version: string;
+    try {
+      version = execFileSync(candidate, ["--version"], { encoding: "utf8", stdio: "pipe" });
+    } catch {
+      continue;
+    }
+    if (version.includes("GNU tar")) return candidate;
+    seen.push(`${candidate}: ${version.split("\n")[0].trim()}`);
+  }
+
+  throw new Error(
+    "GNU tar is required to build the unix archives, so the binary inside them ends up " +
+      "executable. Only these were found:\n  " +
+      (seen.join("\n  ") || "none") +
+      "\nRun this from Git Bash, or set TAR to a GNU tar binary.",
+  );
+};
+
+const makeTarGz = (tar: string, stage: string, out: string) => {
+  execFileSync(
+    tar,
     [
       "-czf",
       out,
@@ -106,13 +134,22 @@ const makeTarGz = (stage: string, out: string) => {
       "--numeric-owner",
       ".",
     ],
-    { stdio: "inherit" },
+    {
+      stdio: "inherit",
+      // GNU tar shells out to gzip for -z. Git for Windows keeps both in the same
+      // directory, which is only on PATH inside Git Bash, so add it explicitly or tar
+      // fails with "Child returned status 127".
+      env: { ...process.env, PATH: `${dirname(tar)}${delimiter}${process.env.PATH ?? ""}` },
+    },
   );
 };
 
 /* --------------------------------------------------------------------------- */
 
 console.log(`building release ${version}\n`);
+
+const tar = findGnuTar();
+console.log(`using tar: ${tar}`);
 
 execFileSync(process.execPath, [join("scripts", "build-go.mts"), "--all"], { stdio: "inherit" });
 
@@ -153,7 +190,7 @@ for (const target of TARGETS) {
   const base = `spotify-ws-host-${version}-${target.name}`;
   const archive = join(OUT_DIR, `${base}.${target.archive}`);
   if (target.archive === "zip") makeZip(stage, archive);
-  else makeTarGz(stage, archive);
+  else makeTarGz(tar, stage, archive);
 }
 
 wipe(STAGE_DIR);
