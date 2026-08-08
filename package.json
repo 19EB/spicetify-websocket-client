@@ -10,8 +10,10 @@
     "build-standalone": "node scripts/build-standalone.mts --minify",
     "package": "node scripts/build-dist.mts",
     "build-go": "node scripts/build-go.mts",
+    "dev": "node host/index.mts",
     "host": "node host/index.mts",
-    "typecheck": "tsc --noEmit && tsc -p host && tsc -p scripts"
+    "typecheck": "tsc --noEmit && tsc -p host && tsc -p scripts",
+    "host:exe": "node scripts/host-exe.mts"
   },
   "license": "MIT",
   "devDependencies": {

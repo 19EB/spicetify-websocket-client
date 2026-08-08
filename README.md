@@ -759,11 +759,15 @@ spicetify apply
 
 Both builds share all of `src/`. Only the entry point differs: `src/standalone/entry.ts` instead of `src/app.tsx`, without the UI.
 
-Run the host from source, which rebuilds the client bundle on each start:
+Run the host from source. It rebuilds the client bundle on each start, so this is the
+loop to use while working on `src/`:
 
 ```bash
-npm run host
+npm run dev
 ```
+
+`npm run host` is the same thing under its original name. To run the compiled binary
+instead, which is what users get, use `npm run host:exe`.
 
 Build the distributable, a single executable with the client bundle embedded:
 
