@@ -3,6 +3,7 @@ import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { PlayerTrack } from "../outgoing/types";
 import { toPlayerTrackArray } from "./util";
+import { Player } from "../../platform";
 
 type GetNextTracksPayload = {
     tracks : PlayerTrack[];
@@ -10,7 +11,7 @@ type GetNextTracksPayload = {
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.GET_NEXT_TRACKS>) {
     
-    const nextItems = Spicetify.Player.data.nextItems;
+    const nextItems = Player.data.nextItems;
     const nextTracks = toPlayerTrackArray(nextItems);
 
     const response : WebsocketResponse<GetNextTracksPayload> = {

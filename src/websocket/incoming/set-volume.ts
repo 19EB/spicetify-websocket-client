@@ -2,6 +2,7 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from ".
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { isNumber } from "./util";
+import { Player } from "../../platform";
 
 type SetVolumePayload = {
     level?: number;
@@ -9,7 +10,7 @@ type SetVolumePayload = {
 
 function setVolume(level: number) {
     const clamped = Math.max(0, Math.min(level, 1));
-    Spicetify.Player.setVolume(clamped);
+    Player.setVolume(clamped);
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SET_VOLUME>) {

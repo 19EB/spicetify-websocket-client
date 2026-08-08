@@ -1,6 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 type GetShufflePayload = {
     state : boolean;
@@ -14,7 +15,7 @@ function handleRequest(websocketClient : WebsocketClient, websocketMessage: Webs
         requestName: WEBSOCKET_EVENT_TYPES.GET_SHUFFLE,
         requestId: websocketMessage.requestId,
         payload: {
-            state : Spicetify.Player.getShuffle()
+            state : Player.getShuffle()
         }
     }
 

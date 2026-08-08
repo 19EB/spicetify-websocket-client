@@ -2,13 +2,14 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from ".
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { isNumber } from "./util";
+import { Player } from "../../platform";
 
 type SkipForwardPayload = {
     amount?: number;
 }
 
 function skipForward(amount: number) {
-    Spicetify.Player.skipForward(amount);
+    Player.skipForward(amount);
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SKIP_FORWARD>) {

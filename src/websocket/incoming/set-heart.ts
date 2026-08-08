@@ -1,13 +1,14 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
+import { Player } from "../../platform";
 
 type SetHeartPayload = {
     status?: boolean;
 }
 
 function setHeart(status : boolean) {
-    Spicetify.Player.setHeart(status);
+    Player.setHeart(status);
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SET_HEART>) {

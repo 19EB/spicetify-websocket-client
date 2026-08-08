@@ -1,13 +1,14 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
+import { Player } from "../../platform";
 
 type SetMutePayload = {
     state?: boolean;
 }
 
 function setMute(state : boolean) {
-    Spicetify.Player.setMute(state);
+    Player.setMute(state);
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SET_MUTE>) {

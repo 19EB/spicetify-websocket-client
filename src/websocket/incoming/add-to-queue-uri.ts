@@ -2,13 +2,14 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage, WebsocketMess
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { safeParseUri } from "./util";
+import { Player } from "../../platform";
 
 type AddToQueueUriPayload = {
     uri?: string;
 }
 
 function addToQueueUri(uri : string) {
-    Spicetify.addToQueue([{uri : uri}]);
+    Player.addToQueue([{uri : uri}]);
 }
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.ADD_TO_QUEUE_URI>) {

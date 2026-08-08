@@ -2,13 +2,14 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage, WebsocketMess
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { safeParseUri } from "./util";
+import { Player } from "../../platform";
 
 type RemoveFromQueueUriPayload = {
     uri?: string;
 }
 
 function removeFromQueueUri(uri : string) {
-    Spicetify.removeFromQueue([{uri : uri }]);
+    Player.removeFromQueue([{uri : uri }]);
 }
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URI>) {

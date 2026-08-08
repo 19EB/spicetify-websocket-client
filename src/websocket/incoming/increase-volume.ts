@@ -1,9 +1,10 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 function increaseVolume() {
-    Spicetify.Player.increaseVolume();
+    Player.increaseVolume();
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.INCREASE_VOLUME>) {

@@ -1,13 +1,14 @@
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
+import { Player } from "../../platform";
 
 type SetRepeatPayload = {
     mode?: 0 | 1 | 2;
 }
 
 function setRepeat(mode: number) {
-    Spicetify.Player.setRepeat(mode);
+    Player.setRepeat(mode);
 }
 
 function validateAndRespond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SET_REPEAT>) {

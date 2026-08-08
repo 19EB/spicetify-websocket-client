@@ -1,6 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 type GetProgressPayload = {
     progress : number;
@@ -14,7 +15,7 @@ function handleRequest(websocketClient: WebsocketClient, websocketMessage: Webso
         requestName: WEBSOCKET_EVENT_TYPES.GET_PROGRESS,
         requestId: websocketMessage.requestId,
         payload: {
-            progress : Spicetify.Player.getProgress()
+            progress : Player.getProgress()
         }
     }
 

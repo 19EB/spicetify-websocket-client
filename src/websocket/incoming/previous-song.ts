@@ -1,10 +1,11 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 function playPreviousSong() {
-    Spicetify.Player.skipBack(99999999);
-    Spicetify.Player.back();
+    Player.skipBack(99999999);
+    Player.back();
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.PREVIOUS_SONG>) {
