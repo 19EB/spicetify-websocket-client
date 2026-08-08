@@ -1,14 +1,16 @@
 # spicetify-websocket-client
 
-Unlock access to Spotify's Player API functionality, **without the Spotify premium requirement**.
+Control Spotify and react to what it is playing, from your own application.
 
-`spicetify-websocket-client` is a [Spicetify](https://github.com/spicetify/cli) extension that enables websocket communication between Spotify desktop client and a websocket server.
+`spicetify-websocket-client` enables websocket communication between the Spotify desktop client and a websocket server.
 It does two things:
 
 - Sends outgoing events to the websocket server such as song change
 - Receives incoming websocket events that control playback actions such as next song, previous song, and volume changes
 
-The extension adds a small control button inside Spotify and exposes settings for the websocket address, port, endpoint, and auto-connect behavior.
+It works with any websocket server, and can run either as a [Spicetify extension](#installation) or [standalone](#running-standalone-without-spicetify), without Spicetify installed. Both use the same websocket API, so everything documented below applies to either.
+
+As a Spicetify extension it adds a small control button inside Spotify and exposes settings for the websocket address, port, endpoint, and auto-connect behavior. Standalone it runs without any interface and reads its settings from a file.
 
 ## Features
 
@@ -77,6 +79,70 @@ Run the following command in Terminal.
 spicetify backup apply
 ```
 
+## Running standalone (without Spicetify)
+
+The standalone build runs the same client without Spicetify. A small host program launches Spotify with its remote debugging port enabled, injects the client, and prints Spotify's log output to a terminal window. Your Spotify installation is not modified, so there is nothing to re-apply after a Spotify update.
+
+> [!IMPORTANT]
+> Like Spicetify, this requires Spotify installed directly from their website. If your current Spotify installation is from the Microsoft Store, uninstall it and reinstall directly from [Spotify](https://www.spotify.com/download) by clicking <ins>Download directly from Spotify</ins>.
+
+### Setup
+
+1. Download the standalone package from [Releases](https://github.com/19EB/spicetify-websocket-client/releases) and unzip it.
+
+2. Open `websocket-client.ini` and set the address, port and endpoint of your websocket server.
+
+```ini
+[websocket]
+address = 127.0.0.1
+port = 9090
+endpoint = /
+startOnLaunch = true
+```
+
+3. Run `start.cmd` on Windows, or the `spotify-ws-host` binary on macOS and Linux.
+
+The host is a single executable, so there is nothing to install.
+
+**Note**: Spotify only accepts the remote debugging flag at launch, and allows one instance at a time. If Spotify is already running, the host closes and reopens it, so playback stops for a few seconds. Set `restart = false` under `[spotify]` to make it stop with an error instead.
+
+Once connected, Spotify's log output appears in the terminal. Keep the window open so the client is reinjected whenever Spotify reloads. If you close it, the client keeps running until Spotify next reloads.
+
+### Configuration
+
+Settings are read from `websocket-client.ini` next to the executable. A different path can be given as the first argument.
+
+`[websocket]`
+
+| Key | Default | Description |
+|---|---|---|
+| `address` | `127.0.0.1` | Websocket server address |
+| `port` | `9090` | Websocket server port |
+| `endpoint` | `/` | Path on the server, for example `/spicetify` |
+| `startOnLaunch` | `true` | Connect as soon as the client is injected |
+| `reconnect` | `true` | Reconnect when the server goes away |
+| `reconnectDelayMs` | `1000` | Delay before the first retry, doubled on each attempt |
+| `reconnectMaxDelayMs` | `30000` | Longest delay between retries |
+
+`[spotify]`
+
+| Key | Default | Description |
+|---|---|---|
+| `debugPort` | `9223` | Local port the host uses to talk to Spotify |
+| `restart` | `true` | Restart Spotify when the debug port is not open |
+| `executable` | auto-detected | Path to Spotify, if it is not found automatically |
+
+**Note**: While the host runs, Spotify listens on a local debug port. It is not reachable from other machines, but any program on your computer can use it to control Spotify. Change the port with `debugPort`, or close the terminal window when you are done.
+
+### Troubleshooting
+
+| Message | Cause |
+|---|---|
+| `could not find Spotify` | Set `executable` under `[spotify]` to the full path of Spotify |
+| `Spotify did not open the debug port` | Usually the Microsoft Store version. Reinstall from spotify.com |
+| `no page target matching xpui appeared` | Spotify was still starting. Run the host again |
+| Connects, but your server receives nothing | `endpoint` does not match the path on your server |
+
 ## Integrating with Streamer.bot
 
 This project was initially created to be used with a custom websocket server in [Streamer.bot](https://streamer.bot/). We have included a simple ready-to-use Streamerbot setup that lets you control your Spotify, request songs and fetch the currently playing song through Twitch chat.
@@ -110,7 +176,9 @@ This project was initially created to be used with a custom websocket server in 
 ![alt text](resources/image-9.png)
 ![alt text](resources/image-10.png)
 
-**Note**: For future use, always make sure to let Streamerbot load up for a while to ensure it has initialized before opening Spotify to ensure it's able to receive initial data. You can also simply disconnect and reconnect Spotify to ensure proper initialization.
+If you are running [standalone](#running-standalone-without-spicetify), there is no settings page. Put the same address, port and endpoint in `websocket-client.ini` and start the host.
+
+**Note**: For future use, always make sure to let Streamerbot load up for a while to ensure it has initialized before opening Spotify to ensure it's able to receive initial data. You can also simply disconnect and reconnect Spotify to ensure proper initialization. With reconnecting enabled, which is the default, the client will also recover on its own if Streamerbot is restarted.
 
 
 The imported actions in Streamerbot intuitively do what their name suggests. Most of these are triggered by their corresponding chat command. You can disable the functions you don't want by either disabling their corresponding commands in the `Commands` section or by disabling the actions themselves. By default, chat commands that control your spotify in any way have been restricted to only you and your Twitch moderators.
@@ -121,7 +189,7 @@ Do **NOT** disable or alter `Process event`, `Handshake`, `Spicetify event signa
 
 ### Websocket settings
 
-The extension adds its websocket configuration to Spotify settings under `Websocket integration`.
+As a Spicetify extension, the websocket configuration is added to Spotify settings under `Websocket integration`. Standalone, the same settings are read from `websocket-client.ini`, see [Configuration](#configuration).
 
 Available settings:
 
@@ -129,6 +197,11 @@ Available settings:
 - `Port` default: `9090`
 - `Endpoint` default: `/`
 - `Start on launch` default: `false`
+- `Reconnect automatically` default: `true`
+- `Reconnect delay (ms)` default: `1000`
+- `Max reconnect delay (ms)` default: `30000`
+
+When the server goes away, for example when Streamer.bot restarts, the client reconnects on its own. It waits `Reconnect delay` before the first attempt and doubles that up to `Max reconnect delay`. The initial player state is sent again once it reconnects.
 
 ### Websocket message format
 
@@ -640,10 +713,11 @@ Example `GetNextTracks` response:
 
 Before building this extension, make sure you have:
 
-- [Node.js](https://nodejs.org/) and `npm`
+- [Node.js](https://nodejs.org/) 22.18 or newer, and `npm`
 - the Spotify desktop client
 - [Spicetify CLI](https://github.com/spicetify/cli) installed and working
 - a valid Spicetify setup that has already been applied to Spotify at least once
+- [Go](https://go.dev/dl/) 1.21 or newer, only if you want to build the standalone host
 
 ### Build
 
@@ -680,6 +754,43 @@ After building, enable the extension in Spicetify:
 spicetify config extensions spicetify-websocket-client.js
 spicetify apply
 ```
+
+### Building the standalone host
+
+Both builds share all of `src/`. Only the entry point differs: `src/standalone/entry.ts` instead of `src/app.tsx`, without the UI.
+
+Run the host from source, which rebuilds the client bundle on each start:
+
+```bash
+npm run host
+```
+
+Build the distributable, a single executable with the client bundle embedded:
+
+```bash
+npm run package            # current platform
+npm run package -- --all   # Windows, Linux and macOS
+```
+
+The result is written to `dist-standalone/`, ready to zip. Placing a `client.js` next to the binary overrides the embedded copy, which is useful for testing a change to the client without rebuilding the host.
+
+To type check the extension, the host and the build scripts:
+
+```bash
+npm run typecheck
+```
+
+### Project layout
+
+| Path | Purpose |
+|---|---|
+| `src/platform/` | Resolves Spotify's APIs, replacing `Spicetify.Player` and `Spicetify.Platform`. Used by both builds, see [docs/standalone-platform.md](docs/standalone-platform.md) |
+| `src/websocket/` | Websocket client and the incoming and outgoing handlers |
+| `src/app.tsx` | Spicetify entry point, with the settings UI and play bar button |
+| `src/standalone/` | Standalone entry point, configured by the host |
+| `host/` | Node host, used during development |
+| `gohost/` | Go host, built into the distributed binary |
+| `scripts/` | Build and packaging scripts |
 
 ### Adding new events
 
