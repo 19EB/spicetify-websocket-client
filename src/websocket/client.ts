@@ -11,7 +11,7 @@ import { getSettingValue } from "../config/provider";
 import { notify } from "../log/notify";
 import { registerEvents, registerListeners } from "./registry";
 import { WebsocketConnectionStatus } from "./types";
-import { WebsocketEvent } from "./outgoing/types";
+import { WebsocketEvent, WebsocketResponse } from "./outgoing/types";
 import PubSub from "pubsub-js";
 import { sendInitialPlayerState } from "./outgoing/initial-state";
 
@@ -31,6 +31,19 @@ type ReconnectConfig = {
 const readNumberSetting = (key: string, fallback: number): number => {
     const parsed = Number(getSettingValue<string | number>(key));
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+const pad = (value: number, width = 2) => String(value).padStart(width, "0");
+
+const timestamp = () => {
+    const now = new Date();
+    return `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}.${pad(now.getMilliseconds(), 3)}`;
+}
+
+// Responses all share the eventName "Response", so name them by the request they answer.
+const messageName = (payload: WebsocketEvent<unknown>) => {
+    const { requestName } = payload as WebsocketResponse<unknown>;
+    return requestName ? `${payload.eventName}:${requestName}` : payload.eventName;
 }
 
 export class WebsocketClient {
@@ -210,10 +223,10 @@ export class WebsocketClient {
         const ws = this.getWebsocket();
         if (!ws) return;
         if (ws.readyState === ws.OPEN) {
-            console.log('Sending message to server');
+            console.log(`[${timestamp()}] sent ${messageName(payload)}`);
             ws.send(JSON.stringify(payload));
         } else {
-            console.log('WebSocket is not open. Ready state: ' + ws.readyState);
+            console.log(`[${timestamp()}] not sent, websocket is not open (ready state ${ws.readyState}): ${messageName(payload)}`);
         }
     }
 }
