@@ -15,6 +15,8 @@ export const getStatusText = (status: WebsocketConnectionStatus): string => {
       return "Websocket connection error";
     case WebsocketConnectionStatus.CONNECTING:
       return "Websocket connecting";
+    case WebsocketConnectionStatus.RECONNECTING:
+      return "Websocket reconnecting";
     case WebsocketConnectionStatus.NOT_CONNECTED:
       return "Websocket not connected";
     default:
@@ -34,6 +36,7 @@ export const WebsocketIcon = (props: Props) => {
       color = "#f43f5e";
       break;
     case WebsocketConnectionStatus.CONNECTING:
+    case WebsocketConnectionStatus.RECONNECTING:
       color = "#facc15";
       break;
     case WebsocketConnectionStatus.NOT_CONNECTED:

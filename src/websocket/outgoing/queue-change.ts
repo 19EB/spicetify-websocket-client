@@ -2,15 +2,17 @@ import { WebsocketClient } from "../client";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
 import { PlayerTrack } from "./types";
 import { toPlayerTrack } from "../incoming/util";
+import { Player } from "../../platform";
 
 const handleQueueChange = (websocketClient: WebsocketClient) => {
 
-    const nextItems = Spicetify.Player.data?.nextItems ?? undefined;
+    const nextItems = Player.data?.nextItems ?? undefined;
     const nextTracks: PlayerTrack[] = [];
 
     if (nextItems != undefined) {
         for (let i = 0; i < nextItems.length; i++) {
-            nextTracks[i] = toPlayerTrack(nextItems[i]);
+            const track = toPlayerTrack(nextItems[i]);
+            if (track) nextTracks.push(track);
         }
 
         const objectToSend: WebsocketEvent<PlayerTrack[]> = {
@@ -25,5 +27,5 @@ const handleQueueChange = (websocketClient: WebsocketClient) => {
 }
 
 export const registerQueueChangeListener = (websocketClient: WebsocketClient) => {
-    Spicetify.Platform.PlayerAPI._events.addListener("queue_update", () => handleQueueChange(websocketClient));
+    Player.addEventListener("queue_update", () => handleQueueChange(websocketClient));
 }

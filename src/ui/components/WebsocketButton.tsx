@@ -4,6 +4,7 @@ import { WebsocketConnectionStatus } from "../../websocket/types";
 import { useWebsocketStatus } from "../hooks/useWebsocketStatus";
 import { WebsocketDialog } from "./WebsocketDialog";
 import { asyncElement } from "../../dom/await-element";
+import { Platform } from "../../platform";
 
 const { React } = Spicetify;
 const { ButtonTertiary: Button, TooltipWrapper } = Spicetify.ReactComponent;
@@ -23,7 +24,7 @@ export const WebsocketButton = () => {
     return (
         <React.Fragment>
             {open && <WebsocketDialog onConfirm={async () => {
-                Spicetify.Platform.History.push("/preferences");
+                Platform.History.push("/preferences");
                 setTimeout(() => {
                     scrollToSettings();
                 }, 500);

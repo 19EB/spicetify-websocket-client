@@ -3,9 +3,10 @@ import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
 import { PlayerTrack } from "../outgoing/types";
 import { toPlayerTrack } from "./util";
+import { Player } from "../../platform";
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.GET_CURRENT_TRACK>) {
-    const currentTrack = toPlayerTrack(Spicetify.Player.data.item);
+    const currentTrack = toPlayerTrack(Player.data.item);
 
     const response : WebsocketResponse<PlayerTrack> = {
         eventName: "Response",

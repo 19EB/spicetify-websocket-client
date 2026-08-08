@@ -1,5 +1,6 @@
 import { WebsocketClient } from "../client";
 import { WEBSOCKET_OUTGOING_EVENT_TYPE, WebsocketEvent } from "./types";
+import { Player } from "../../platform";
 
 type PlayPauseChangedPayload = {
     isPlaying: boolean;
@@ -7,7 +8,7 @@ type PlayPauseChangedPayload = {
 
 const handlePlayPauseChange = (websocketClient: WebsocketClient) => {
     const payload: PlayPauseChangedPayload = {
-        isPlaying: Spicetify.Player.isPlaying(),
+        isPlaying: Player.isPlaying(),
     };
 
     const message: WebsocketEvent<PlayPauseChangedPayload> = {
@@ -19,6 +20,6 @@ const handlePlayPauseChange = (websocketClient: WebsocketClient) => {
 };
 
 export const registerPlayPauseChangeListener = (websocketClient: WebsocketClient) => {
-    Spicetify.Player.addEventListener("onplaypause", () => handlePlayPauseChange(websocketClient));
+    Player.addEventListener("onplaypause", () => handlePlayPauseChange(websocketClient));
 
 };

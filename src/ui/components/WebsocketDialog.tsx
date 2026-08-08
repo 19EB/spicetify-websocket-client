@@ -27,7 +27,8 @@ const DialogContent = () => {
 
     const ButtonComponent = ButtonPrimary;
     const colorSet = status === WebsocketConnectionStatus.CONNECTED ? "negative" : "announcement";
-    const buttonFn = status === WebsocketConnectionStatus.CONNECTED ? () => websocketClient.disconnect() : () => websocketClient.connect();
+    // The client is absent if the platform APIs could not be resolved on startup.
+    const buttonFn = status === WebsocketConnectionStatus.CONNECTED ? () => websocketClient?.disconnect() : () => websocketClient?.connect();
 
     return (
         <div style={{ marginTop: 48, marginBottom: 32, display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>

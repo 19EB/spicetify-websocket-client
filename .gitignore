@@ -137,3 +137,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Standalone client bundle and its distributable archive
+dist-standalone/
+spotify-websocket-client-standalone.zip
+
+# Copied in by build-go.mts so the Go binary can embed it
+gohost/client.js
+
+# Local host config (keep the .example and .test files tracked)
+websocket-client.ini

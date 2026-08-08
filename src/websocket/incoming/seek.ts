@@ -2,13 +2,14 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from ".
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { isNumber } from "./util";
+import { Player } from "../../platform";
 
 type SeekPayload = {
     position?: number;
 }
 
 function seek(position: number) {
-    Spicetify.Player.seek(position);
+    Player.seek(position);
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.SEEK>) {

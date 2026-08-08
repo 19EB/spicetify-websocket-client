@@ -1,6 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 type GetHeartPayload = {
     status : boolean;
@@ -14,7 +15,7 @@ function handleRequest(websocketClient : WebsocketClient, websocketMessage: Webs
         requestName: WEBSOCKET_EVENT_TYPES.GET_HEART,
         requestId: websocketMessage.requestId,
         payload: {
-            status : Spicetify.Player.getHeart()
+            status : Player.getHeart()
         }
     }
 

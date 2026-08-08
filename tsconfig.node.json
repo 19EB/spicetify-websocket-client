@@ -1,0 +1,19 @@
+// Shared base for the Node-side TypeScript (host/ and scripts/). Those directories each
+// have their own tsconfig.json so editors discover them: the TS server only auto-detects
+// files literally named tsconfig.json, and the root one covers the browser code in src/.
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
+  }
+}

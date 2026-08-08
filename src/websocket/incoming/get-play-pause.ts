@@ -1,6 +1,7 @@
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 type GetPlayPausePayload = {
     isPlaying : boolean;
@@ -14,7 +15,7 @@ function handleRequest(websocketClient : WebsocketClient, websocketMessage: Webs
         requestName: WEBSOCKET_EVENT_TYPES.GET_PLAY_PAUSE,
         requestId: websocketMessage.requestId,
         payload: {
-            isPlaying : Spicetify.Player.isPlaying()
+            isPlaying : Player.isPlaying()
         }
     }
 

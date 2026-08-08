@@ -2,13 +2,14 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction, WebsocketMessage, WebsocketMess
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { safeParseUri } from "./util";
+import { Player } from "../../platform";
 
 type PlayUriPayload = {
     uri?: string;
 }
 
 function playUri(uri: string) {
-    Spicetify.Player.playUri(uri);
+    Player.playUri(uri);
 }
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.PLAY_URI>) {

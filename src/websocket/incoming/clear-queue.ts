@@ -2,9 +2,10 @@ import { WEBSOCKET_EVENT_TYPES, WebsocketAction } from "./types";
 import { WebsocketResponse } from "../outgoing/types";
 import { WebsocketClient } from "../client";
 import { WebsocketMessageGuard } from "./types";
+import { Player } from "../../platform";
 
 function clearQueue() {
-    Spicetify.Platform.PlayerAPI.clearQueue();
+    Player.clearQueue();
 }
 
 function respond(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.CLEAR_QUEUE>) {

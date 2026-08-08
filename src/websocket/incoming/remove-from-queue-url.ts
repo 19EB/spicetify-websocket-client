@@ -3,13 +3,14 @@ import { spotifyUrlToUri } from "./util";
 import { WebsocketClient } from "../client";
 import { WebsocketResponse } from "../outgoing/types";
 import { safeParseUri } from "./util";
+import { Player } from "../../platform";
 
 type RemoveFromQueueUrlPayload = {
     url: string;
 }
 
 function removeFromQueueUrl(uri: string) {
-    Spicetify.removeFromQueue([{ uri: uri }]);
+    Player.removeFromQueue([{ uri: uri }]);
 }
 
 function handleRequest(websocketClient: WebsocketClient, websocketMessage: WebsocketMessageGuard<WEBSOCKET_EVENT_TYPES.REMOVE_FROM_QUEUE_URL>) {

@@ -1,6 +1,7 @@
 import { PlayerTrack } from "../outgoing/types";
 import { ContextTrack } from "./types";
 import { PlayerState } from "../outgoing/types";
+import { Player, SpotifyUri } from "../../platform";
 
 
 export function spotifyUrlToUri(input: string) {
@@ -51,8 +52,9 @@ function convertSpicetifyImagesEntities(
     return images;
 }
 
-export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack) : PlayerTrack {
-  
+export function toPlayerTrack(spicetifyPlayerTrack: Spicetify.PlayerTrack | null | undefined) : PlayerTrack | null {
+    if (!spicetifyPlayerTrack) return null;
+
     const playerTrack: PlayerTrack = {
         type: spicetifyPlayerTrack.type,
         uri: spicetifyPlayerTrack.uri,
@@ -77,28 +79,32 @@ export function toPlayerTrackArray(spicetifyPlayerTracks: Spicetify.PlayerTrack[
 
     if(spicetifyPlayerTracks) {
         for(let i = 0; i < spicetifyPlayerTracks.length ; i++) {
-            playerTracks[i] = toPlayerTrack(spicetifyPlayerTracks[i]);
+            const track = toPlayerTrack(spicetifyPlayerTracks[i]);
+            if (track) playerTracks.push(track);
         }
     }
 
-    return playerTracks;    
+    return playerTracks;
 }
 
-export function getPlayerState(): PlayerState {
+export function getPlayerState(): PlayerState | null {
 
-    const previousTrack = Spicetify.Player.data.previousItems?.[0] ?? null;
-    const nextTracks = Spicetify.Player.data.nextItems ?? null;
+    const currentTrack = toPlayerTrack(Player.data.item);
+    if (!currentTrack) return null;
+
+    const previousTrack = Player.data.previousItems?.[0] ?? null;
+    const nextTracks = Player.data.nextItems ?? null;
 
     const playerState: PlayerState = {
-        isPlaying: Spicetify.Player.isPlaying(),
-        progress: Spicetify.Player.getProgress(),
-        duration: Spicetify.Player.getDuration(),
-        isMuted: Spicetify.Player.getMute(),
-        volume: Spicetify.Player.getVolume(),
-        isShuffling: Spicetify.Player.getShuffle(),
-        repeatMode: Spicetify.Player.getRepeat(),
-        currentTrack: toPlayerTrack(Spicetify.Player.data.item),
-        previousTrack: previousTrack ? toPlayerTrack(previousTrack) : undefined,
+        isPlaying: Player.isPlaying(),
+        progress: Player.getProgress(),
+        duration: Player.getDuration(),
+        isMuted: Player.getMute(),
+        volume: Player.getVolume(),
+        isShuffling: Player.getShuffle(),
+        repeatMode: Player.getRepeat(),
+        currentTrack: currentTrack,
+        previousTrack: previousTrack ? toPlayerTrack(previousTrack) ?? undefined : undefined,
         nextTracks: nextTracks ? toPlayerTrackArray(nextTracks) : undefined,
     };
 
@@ -106,11 +112,11 @@ export function getPlayerState(): PlayerState {
 }
 
 
-export function safeParseUri(uri: string | null): Spicetify.URI | null {
+export function safeParseUri(uri: string | null): SpotifyUri | null {
     if (uri == null) return null;
     
     try {
-        return Spicetify.URI.fromString(uri);
+        return SpotifyUri.fromString(uri);
     } catch {
         return null;
     }
