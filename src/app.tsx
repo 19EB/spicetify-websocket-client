@@ -2,6 +2,8 @@ import { WebsocketButton } from "./ui/components/WebsocketButton";
 import { addSettings } from "./config/settings";
 import { WebsocketClient } from "./websocket/client";
 import { asyncElement } from "./dom/await-element";
+import { bootstrapPlatform } from "./platform";
+import { setNotifier } from "./log/notify";
 
 const { React, ReactDOM } = Spicetify;
 
@@ -10,6 +12,11 @@ async function main() {
   while (!Spicetify?.showNotification || !Spicetify?.Player) {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
+
+  setNotifier((message, isError) => Spicetify.showNotification(message, isError));
+
+  // Resolve Spotify's service registry before any handler runs
+  await bootstrapPlatform();
 
   await addSettings();
 
