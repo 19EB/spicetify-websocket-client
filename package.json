@@ -1,6 +1,6 @@
 {
   "name": "spicetify-websocket-client",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "start": "spicetify-creator && spicetify apply",
@@ -9,6 +9,7 @@
     "watch": "spicetify-creator --watch",
     "build-standalone": "node scripts/build-standalone.mts --minify",
     "package": "node scripts/build-dist.mts",
+    "release": "node scripts/release.mts",
     "build-go": "node scripts/build-go.mts",
     "dev": "node host/index.mts",
     "host": "node host/index.mts",

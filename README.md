@@ -788,7 +788,7 @@ npm run typecheck
 
 | Path | Purpose |
 |---|---|
-| `src/platform/` | Resolves Spotify's APIs, replacing `Spicetify.Player` and `Spicetify.Platform`. Used by both builds, see [docs/standalone-platform.md](docs/standalone-platform.md) |
+| `src/platform/` | Resolves Spotify's APIs, replacing `Spicetify.Player` and `Spicetify.Platform`. Used by both builds |
 | `src/websocket/` | Websocket client and the incoming and outgoing handlers |
 | `src/app.tsx` | Spicetify entry point, with the settings UI and play bar button |
 | `src/standalone/` | Standalone entry point, configured by the host |

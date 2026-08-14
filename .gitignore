@@ -147,3 +147,6 @@ gohost/client.js
 
 # Local host config (keep the .example and .test files tracked)
 websocket-client.ini
+
+# Release archives built by scripts/release.mts
+release/
